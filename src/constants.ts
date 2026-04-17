@@ -44,14 +44,6 @@ export const NAVIGATION = [
       { name: 'Espace Membre', path: '/client/login', icon: User },
     ]
   },
-  { 
-    name: 'Section Jeunes (13+)', 
-    path: '/jeunes',
-    children: [
-      { name: 'Offres Élèves/Étudiants', path: '/offres-directes', icon: Rocket },
-      { name: 'Forum Étudiants', path: '/forum', icon: MessageSquare },
-    ]
-  },
   { name: 'Contact', path: '/contact' }
 ];
 
