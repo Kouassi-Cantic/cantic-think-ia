@@ -23,7 +23,9 @@ export const YouthAuthModal: React.FC<Props> = ({ isOpen, onClose }) => {
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
       }
+      localStorage.setItem('user_type', 'youth');
       onClose();
+      window.location.reload(); // Refresh to trigger layout switch
     } catch (err) {
       alert("Erreur : " + err);
     }

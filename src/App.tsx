@@ -5,6 +5,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 // Layouts
 import Layout from './components/Layout';
+import YouthLayout from './components/YouthLayout';
 import AdminLayout from './components/AdminLayout';
 
 // Protected Routes
@@ -44,13 +45,18 @@ import AdminDashboard from './pages/AdminDashboard';
 import ClientDashboard from './pages/ClientDashboard';
 
 const App: React.FC = () => {
+  const RootElement = () => {
+    const isYouth = localStorage.getItem('user_type') === 'youth';
+    return isYouth ? <YouthLayout /> : <Layout />;
+  };
+
   return (
     <HelmetProvider>
       <ErrorBoundary>
         <Router>
           <Routes>
-            {/* Public Routes with Main Layout */}
-            <Route path="/" element={<Layout />}>
+            {/* Conditional Routes with Switchable Layout */}
+            <Route path="/" element={<RootElement />}>
               <Route index element={<Home />} />
               <Route path="a-propos" element={<About />} />
               <Route path="services" element={<Services />} />
