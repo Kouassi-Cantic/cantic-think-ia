@@ -1,0 +1,116 @@
+{
+  "entities": {
+    "cases": {
+      "title": "Étude de cas et ROI",
+      "description": "Réalisations et impacts stratégiques des projets IA.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Titre du projet" },
+        "client": { "type": "string", "description": "Nom de l'institution ou client" },
+        "challenge": { "type": "string", "description": "Le défi métier à relever" },
+        "solution": { "type": "string", "description": "La réponse technologique apportée" },
+        "impact": { "type": "string", "description": "L'impact mesurable et le ROI" },
+        "status": { "type": "string", "enum": ["Existant", "En développement", "Phase Pilote"] },
+        "logoUrl": { "type": "string", "format": "uri" },
+        "url": { "type": "string", "format": "uri" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "order": { "type": "integer" },
+        "visualType": { "type": "string", "enum": ["hero", "standard"] }
+      },
+      "required": ["title", "client", "challenge", "solution", "impact", "status"]
+    },
+    "admins": {
+      "title": "Administrateur",
+      "description": "Utilisateurs ayant accès à la console de gouvernance.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "password": { "type": "string" },
+        "role": { "type": "string", "enum": ["Super Admin", "Consultant", "Analyste"] },
+        "status": { "type": "string", "enum": ["Actif", "Suspendu"] }
+      },
+      "required": ["name", "email", "password", "role", "status"]
+    },
+    "resources": {
+      "title": "Ressource Digitale",
+      "description": "Ebooks, guides et outils de la boutique.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "type": { "type": "string", "enum": ["ebook", "template", "guide", "case_study"] },
+        "typeLabel": { "type": "string" },
+        "fileUrl": { "type": "string", "format": "uri" },
+        "category": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "pagesCount": { "type": "integer" },
+        "targetAudience": { "type": "string" },
+        "keyBenefits": { "type": "array", "items": { "type": "string" } },
+        "badge": { "type": "string" },
+        "slug": { "type": "string" },
+        "order": { "type": "integer" }
+      },
+      "required": ["title", "description", "price", "type", "fileUrl"]
+    },
+    "auditLogs": {
+      "title": "Journal d'Audit",
+      "description": "Historique des actions administratives effectuées sur la plateforme.",
+      "type": "object",
+      "properties": {
+        "adminEmail": { "type": "string", "format": "email" },
+        "adminName": { "type": "string" },
+        "action": { "type": "string" },
+        "target": { "type": "string" },
+        "details": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["adminEmail", "adminName", "action", "target", "createdAt"]
+    },
+    "forum_categories": {
+      "title": "Catégorie de Forum",
+      "description": "Catégories pour organiser les discussions.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["name"]
+    },
+    "forum_posts": {
+      "title": "Post de Forum",
+      "description": "Sujet de discussion sur le forum.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "authorId": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "content", "authorId", "categoryId", "createdAt"]
+    },
+    "forum_comments": {
+      "title": "Commentaire de Forum",
+      "description": "Réponse à un post de forum.",
+      "type": "object",
+      "properties": {
+        "content": { "type": "string" },
+        "authorId": { "type": "string" },
+        "postId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["content", "authorId", "postId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "cases": { "schema": "cases", "description": "Collection des études de cas" },
+    "admins": { "schema": "admins", "description": "Collection des administrateurs" },
+    "resources": { "schema": "resources", "description": "Collection des ressources de la boutique" },
+    "auditLogs": { "schema": "auditLogs", "description": "Collection des journaux d'audit" },
+    "forum_categories": { "schema": "forum_categories", "description": "Collection des catégories du forum" },
+    "forum_posts": { "schema": "forum_posts", "description": "Collection des posts du forum" },
+    "forum_comments": { "schema": "forum_comments", "description": "Collection des commentaires du forum" }
+  }
+}
