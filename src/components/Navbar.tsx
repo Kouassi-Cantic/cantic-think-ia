@@ -75,7 +75,7 @@ const Navbar: React.FC = () => {
               </Link>
               <button
                  onClick={() => setIsYouthModalOpen(true)}
-                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all border ${scrolled ? 'border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100' : (isHome ? 'border-white/20 bg-white/10 text-white hover:bg-white/20' : 'border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100')}`}
+                 className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all border shadow-lg border-indigo-400 bg-indigo-600 text-white hover:bg-indigo-700"
               >
                 <AlertCircle className="w-3.5 h-3.5" />
                 Section Jeunes (13+)
