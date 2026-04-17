@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { NAVIGATION } from '../constants';
-import { Menu, X, ChevronDown, Search, Command, User } from 'lucide-react';
+import { Menu, X, ChevronDown, Search, Command, User, AlertCircle } from 'lucide-react';
 import Logo from './Logo';
+import { YouthAuthModal } from './YouthAuthModal';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [isYouthModalOpen, setIsYouthModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
 
@@ -71,6 +73,13 @@ const Navbar: React.FC = () => {
               >
                 <User className={`w-4 h-4 ${isLoggedIn ? 'text-primary' : ''}`} />
               </Link>
+              <button
+                 onClick={() => setIsYouthModalOpen(true)}
+                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all border ${scrolled ? 'border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100' : (isHome ? 'border-white/20 bg-white/10 text-white hover:bg-white/20' : 'border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100')}`}
+              >
+                <AlertCircle className="w-3.5 h-3.5" />
+                Section Jeunes (13+)
+              </button>
             </div>
 
             {NAVIGATION.map((item) => (
@@ -164,6 +173,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       )}
+      <YouthAuthModal isOpen={isYouthModalOpen} onClose={() => setIsYouthModalOpen(false)} />
     </nav>
   );
 };
