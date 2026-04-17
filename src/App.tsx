@@ -21,6 +21,7 @@ import Shop from './pages/Shop';
 import Blog from './pages/Blog';
 import ForumList from './components/ForumList';
 import PostEditor from './components/PostEditor';
+import TopicDetail from './components/TopicDetail';
 import Contact from './pages/Contact';
 import Legal from './pages/Legal';
 import DirectOffers from './pages/DirectOffers';
@@ -58,6 +59,7 @@ const App: React.FC = () => {
               <Route path="blog" element={<Blog />} />
               <Route path="forum" element={<ForumList />} />
               <Route path="forum/new" element={<PostEditor />} />
+              <Route path="forum/post/:postId" element={<TopicDetail />} />
               <Route path="contact" element={<Contact />} />
               <Route path="legal" element={<Legal />} />
               <Route path="offres-directes" element={<DirectOffers />} />
