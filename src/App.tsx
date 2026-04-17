@@ -34,6 +34,10 @@ import ServiceAutomatisation from './pages/ServiceAutomatisation';
 import ServiceGouvernance from './pages/ServiceGouvernance';
 import ServiceFormation from './pages/ServiceFormation';
 import ServiceDeveloppement from './pages/ServiceDeveloppement';
+import TalentExplorer from './pages/jeunes/TalentExplorer';
+import LaboProjets from './pages/jeunes/LaboProjets';
+import MurVictoires from './pages/jeunes/MurVictoires';
+import QuizIA from './pages/jeunes/QuizIA';
 import NotFound from './pages/NotFound';
 
 // Auth Pages
@@ -71,6 +75,10 @@ const App: React.FC = () => {
               <Route path="contact" element={<Contact />} />
               <Route path="legal" element={<Legal />} />
               <Route path="offres-directes" element={<DirectOffers />} />
+              <Route path="explorateur-talents" element={<TalentExplorer />} />
+              <Route path="labo-projets" element={<LaboProjets />} />
+              <Route path="mur-victoires" element={<MurVictoires />} />
+              <Route path="quiz-ia" element={<QuizIA />} />
               <Route path="roi-simulator" element={<ROISimulatorPage />} />
               <Route path="service-conseil" element={<ServiceConseil />} />
               <Route path="service-ingenierie" element={<ServiceIngenierie />} />

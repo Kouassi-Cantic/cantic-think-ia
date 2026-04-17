@@ -16,22 +16,52 @@ const JeunesHub: React.FC = () => {
                 </div>
                 
                 <div className="grid md:grid-cols-2 gap-8">
-                    <Link to="/offres-directes" className="group p-10 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-indigo-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                    <Link to="/offres-directes" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-indigo-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
                         <div className="p-4 rounded-2xl bg-indigo-50 mb-6 group-hover:bg-indigo-600 transition-colors">
-                            <Rocket className="w-10 h-10 text-indigo-600 group-hover:text-white transition-colors" />
+                            <Rocket className="w-8 h-8 text-indigo-600 group-hover:text-white transition-colors" />
                         </div>
-                        <h2 className="text-3xl font-bold mb-3">Offres Étudiants</h2>
-                        <p className="text-slate-500 font-medium">Booste tes projets avec nos solutions IA créées spécialement pour toi.</p>
-                        <span className="mt-6 inline-flex items-center text-indigo-600 font-bold group-hover:underline">Découvrir →</span>
+                        <h2 className="text-2xl font-bold mb-2">Offres Étudiants</h2>
+                        <p className="text-slate-500 text-sm font-medium">Booste tes projets avec nos solutions IA.</p>
                     </Link>
                     
-                    <Link to="/forum" className="group p-10 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-violet-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                    <Link to="/forum" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-violet-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
                         <div className="p-4 rounded-2xl bg-violet-50 mb-6 group-hover:bg-violet-600 transition-colors">
-                            <MessageSquare className="w-10 h-10 text-violet-600 group-hover:text-white transition-colors" />
+                            <MessageSquare className="w-8 h-8 text-violet-600 group-hover:text-white transition-colors" />
                         </div>
-                        <h2 className="text-3xl font-bold mb-3">Forum Étudiants</h2>
-                        <p className="text-slate-500 font-medium">Une communauté active pour échanger, t'entraider et grandir ensemble.</p>
-                        <span className="mt-6 inline-flex items-center text-violet-600 font-bold group-hover:underline">Rejoindre la discussion →</span>
+                        <h2 className="text-2xl font-bold mb-2">Forum Étudiants</h2>
+                        <p className="text-slate-500 text-sm font-medium">Échange, t'entraide et grandis avec la communauté.</p>
+                    </Link>
+
+                    <Link to="/explorateur-talents" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-emerald-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                        <div className="p-4 rounded-2xl bg-emerald-50 mb-6 group-hover:bg-emerald-600 transition-colors">
+                            <Rocket className="w-8 h-8 text-emerald-600 group-hover:text-white transition-colors" />
+                        </div>
+                        <h2 className="text-2xl font-bold mb-2">Explorateur Talents</h2>
+                        <p className="text-slate-500 text-sm font-medium">Découvre les métiers IA faits pour toi.</p>
+                    </Link>
+
+                    <Link to="/labo-projets" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-amber-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                        <div className="p-4 rounded-2xl bg-amber-50 mb-6 group-hover:bg-amber-600 transition-colors">
+                            <Sparkles className="w-8 h-8 text-amber-600 group-hover:text-white transition-colors" />
+                        </div>
+                        <h2 className="text-2xl font-bold mb-2">Labo de Projets</h2>
+                        <p className="text-slate-500 text-sm font-medium">Structure tes idées en projets concrets.</p>
+                    </Link>
+
+                    <Link to="/mur-victoires" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-rose-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                        <div className="p-4 rounded-2xl bg-rose-50 mb-6 group-hover:bg-rose-600 transition-colors">
+                            <MessageSquare className="w-8 h-8 text-rose-600 group-hover:text-white transition-colors" />
+                        </div>
+                        <h2 className="text-2xl font-bold mb-2">Mur des Victoires</h2>
+                        <p className="text-slate-500 text-sm font-medium">Partage tes astuces IA qui ont changé la donne.</p>
+                    </Link>
+
+                    <Link to="/quiz-ia" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-blue-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                        <div className="p-4 rounded-2xl bg-blue-50 mb-6 group-hover:bg-blue-600 transition-colors">
+                            <Sparkles className="w-8 h-8 text-blue-600 group-hover:text-white transition-colors" />
+                        </div>
+                        <h2 className="text-2xl font-bold mb-2">Quiz IA</h2>
+                        <p className="text-slate-500 text-sm font-medium">Teste tes connaissances et progresse.</p>
                     </Link>
                 </div>
 
