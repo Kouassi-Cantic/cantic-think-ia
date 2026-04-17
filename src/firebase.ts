@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocFromServer, doc } from 'firebase/firestore';
+import { getFirestore, collection, getDocFromServer, doc, setDoc, getDocs } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
 
@@ -80,6 +80,7 @@ export async function testFirestoreConnection() {
     // On tente de lire un document inexistant juste pour tester la route
     await getDocFromServer(doc(db, '_connection_test_', 'ping'));
     console.log("🔥 Firestore : Connexion établie avec succès.");
+    await bootstrapForumCategories();
     return true;
   } catch (error: any) {
     console.error("❌ Firestore : Erreur de connexion :", error.message);
@@ -91,6 +92,25 @@ export async function testFirestoreConnection() {
       console.error("❌ Firestore : Le client est hors ligne ou la base de données est inaccessible.");
     }
     return false;
+  }
+}
+
+async function bootstrapForumCategories() {
+  const categoriesRef = collection(db, 'forum_categories');
+  const snapshot = await getDocs(categoriesRef);
+  
+  if (snapshot.empty) {
+    console.log("🚀 Initialisation des catégories du forum...");
+    const initialCategories = [
+      { name: "L'IA au quotidien" },
+      { name: "Compétences et Avenir" },
+      { name: "Entraide et Mentorat" }
+    ];
+    
+    for (const cat of initialCategories) {
+      await setDoc(doc(categoriesRef), cat);
+    }
+    console.log("✅ Catégories initialisées.");
   }
 }
 testFirestoreConnection();
