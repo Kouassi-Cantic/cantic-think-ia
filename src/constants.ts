@@ -1,4 +1,4 @@
-import { Building2, GraduationCap, Landmark, Workflow, Lightbulb, BookOpen, Rocket, Scale, User, Calculator, MessageSquare } from 'lucide-react';
+import { Building2, GraduationCap, Landmark, Workflow, Lightbulb, BookOpen, Rocket, Scale, User, Calculator, MessageSquare, Users } from 'lucide-react';
 import { Persona, DigitalResource } from './types';
 
 export const BRAND = {
@@ -30,7 +30,6 @@ export const NAVIGATION = [
     children: [
       { name: 'Conseil stratégique', path: '/services?section=conseil', icon: Landmark },
       { name: 'Ingénierie IA et Data', path: '/services?section=data', icon: Workflow },
-      { name: 'Offres Directes (TPE)', path: '/offres-directes', icon: Rocket },
       { name: 'Réalisations (ROI)', path: '/applications', icon: Lightbulb },
       { name: 'Simulateur ROI IA', path: '/roi-simulator', icon: Calculator },
     ]
@@ -42,8 +41,15 @@ export const NAVIGATION = [
       { name: 'Executive Education', path: '/formations', icon: GraduationCap },
       { name: 'Ressources stratégiques', path: '/boutique', icon: BookOpen },
       { name: 'Veille et réflexions', path: '/blog', icon: Rocket },
-      { name: 'Forum Étudiants', path: '/forum', icon: MessageSquare },
       { name: 'Espace Membre', path: '/client/login', icon: User },
+    ]
+  },
+  { 
+    name: 'Section Jeunes (13+)', 
+    path: '/jeunes',
+    children: [
+      { name: 'Offres Élèves/Étudiants', path: '/offres-directes', icon: Rocket },
+      { name: 'Forum Étudiants', path: '/forum', icon: MessageSquare },
     ]
   },
   { name: 'Contact', path: '/contact' }

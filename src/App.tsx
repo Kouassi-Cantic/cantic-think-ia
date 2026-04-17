@@ -19,6 +19,7 @@ import Applications from './pages/Applications';
 import Training from './pages/Training';
 import Shop from './pages/Shop';
 import Blog from './pages/Blog';
+import JeunesHub from './pages/JeunesHub';
 import ForumList from './components/ForumList';
 import PostEditor from './components/PostEditor';
 import TopicDetail from './components/TopicDetail';
@@ -57,6 +58,7 @@ const App: React.FC = () => {
               <Route path="formations" element={<Training />} />
               <Route path="boutique" element={<Shop />} />
               <Route path="blog" element={<Blog />} />
+              <Route path="jeunes" element={<JeunesHub />} />
               <Route path="forum" element={<ForumList />} />
               <Route path="forum/new" element={<PostEditor />} />
               <Route path="forum/post/:postId" element={<TopicDetail />} />
