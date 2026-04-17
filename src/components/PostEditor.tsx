@@ -29,7 +29,7 @@ export const PostEditor: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 space-y-4">
+    <form onSubmit={handleSubmit} className="p-6 pt-32 space-y-4">
       <h2 className="text-xl font-bold">Nouveau Sujet</h2>
       <input 
         type="text" 
