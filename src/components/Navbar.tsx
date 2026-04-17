@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 {item.children ? (
-                  <button className={`flex items-center space-x-1.5 text-[11px] font-black uppercase tracking-[0.2em] transition-colors ${textColor} hover:text-primary`}>
+                  <button className={`flex items-center space-x-1.5 text-[11px] font-black uppercase tracking-[0.2em] transition-colors ${textColor} hover:text-primary ${item.name === 'Section Jeunes (13+)' ? 'text-indigo-600' : ''}`}>
                     <span>{item.name}</span>
                     <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeDropdown === item.name ? 'rotate-180' : ''}`} />
                   </button>
