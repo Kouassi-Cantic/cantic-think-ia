@@ -10,6 +10,7 @@ const YouthLayout: React.FC = () => {
 
     const handleLogout = async () => {
         await signOut(auth);
+        localStorage.removeItem('user_type');
         navigate('/');
         window.location.reload(); // Force rafraîchissement pour revenir au layout pro
     };
