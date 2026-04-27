@@ -24,13 +24,13 @@ export const BRANDING = {
 
 export const NAVIGATION = [
   { name: 'Manifeste', path: '/a-propos' },
+  { name: 'Offres', path: '/offres-directes?scope=professional' },
   { 
     name: 'Expertise', 
     path: '/services',
     children: [
       { name: 'Conseil stratégique', path: '/services?section=conseil', icon: Landmark },
       { name: 'Ingénierie IA et Data', path: '/services?section=data', icon: Workflow },
-      { name: 'Offres Directes', path: '/offres-directes?scope=professional', icon: Package },
       { name: 'Réalisations (ROI)', path: '/applications', icon: Lightbulb },
       { name: 'Simulateur ROI IA', path: '/roi-simulator', icon: Calculator },
     ]
@@ -44,8 +44,7 @@ export const NAVIGATION = [
       { name: 'Veille et réflexions', path: '/blog', icon: Rocket },
       { name: 'Espace Membre', path: '/client/login', icon: User },
     ]
-  },
-  { name: 'Contact', path: '/contact' }
+  }
 ];
 
 export const PERSONAS: Persona[] = [
