@@ -373,15 +373,34 @@ const DirectOffers: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const clientEmail = localStorage.getItem('cantic_client_email');
-  const [activeCategory, setActiveCategory] = useState('visibilite');
+  
+  const params = new URLSearchParams(location.search);
+  const scope = params.get('scope'); // 'youth' or 'professional' (or all if undefined)
+  
+  const filteredCategories = CATEGORIES.filter(cat => {
+    if (scope === 'youth') return cat.id === 'eleves' || cat.id === 'etudiants';
+    if (scope === 'professional') return cat.id !== 'eleves' && cat.id !== 'etudiants';
+    return true;
+  });
+
+  const [activeCategory, setActiveCategory] = useState(filteredCategories[0]?.id || 'visibilite');
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
     const category = params.get('category');
     if (category && CATEGORIES.some(cat => cat.id === category)) {
       setActiveCategory(category);
+    } else if (filteredCategories.length > 0 && !filteredCategories.some(cat => cat.id === activeCategory)) {
+        setActiveCategory(filteredCategories[0].id);
     }
-  }, [location]);
+  }, [location, scope]);
+  
+  // Need to update the rendering to use filteredCategories and filtered packs
+  const filteredPacks = PACKS.filter(p => {
+    const isYouth = p.categoryId === 'eleves' || p.categoryId === 'etudiants';
+    if (scope === 'youth') return isYouth;
+    if (scope === 'professional') return !isYouth;
+    return true;
+  });
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedPack, setSelectedPack] = useState<string | null>(null);
   const [budgets, setBudgets] = useState<Record<string, number>>({});
@@ -521,7 +540,7 @@ const DirectOffers: React.FC = () => {
 
         {/* Categories Navigation */}
         <div className="flex gap-4 mb-12 overflow-x-auto pb-4 scrollbar-hide">
-          {CATEGORIES.map(cat => (
+          {filteredCategories.map(cat => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
@@ -535,6 +554,7 @@ const DirectOffers: React.FC = () => {
               {cat.name}
             </button>
           ))}
+          {scope !== 'youth' && (
           <button
             onClick={() => setActiveCategory('custom')}
             className={`px-8 py-4 rounded-2xl font-black uppercase text-[11px] tracking-[0.2em] transition-all whitespace-nowrap flex items-center gap-3 ${
@@ -546,6 +566,7 @@ const DirectOffers: React.FC = () => {
             <Calculator className="w-4 h-4" />
             Sur-Mesure
           </button>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
@@ -560,7 +581,7 @@ const DirectOffers: React.FC = () => {
                   exit={{ opacity: 0, y: -20 }}
                   className="grid grid-cols-1 md:grid-cols-2 gap-8"
                 >
-                  {PACKS.filter(p => p.categoryId === activeCategory).map((pack) => (
+                  {filteredPacks.filter(p => p.categoryId === activeCategory).map((pack) => (
                     <motion.div
                       key={pack.id}
                       whileHover={{ y: -8 }}

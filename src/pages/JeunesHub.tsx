@@ -16,7 +16,7 @@ const JeunesHub: React.FC = () => {
                 </div>
                 
                 <div className="grid md:grid-cols-2 gap-8">
-                    <Link to="/offres-directes" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-indigo-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                    <Link to="/offres-directes?scope=youth" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-indigo-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
                         <div className="p-4 rounded-2xl bg-indigo-50 mb-6 group-hover:bg-indigo-600 transition-colors">
                             <Rocket className="w-8 h-8 text-indigo-600 group-hover:text-white transition-colors" />
                         </div>

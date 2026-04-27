@@ -326,19 +326,19 @@ const Home: React.FC = () => {
                 icon: UserPlus,
                 title: "Particuliers",
                 desc: "Soignez votre image numérique et lancez vos projets personnels avec une base solide.",
-                link: "/offres-directes?category=particuliers"
+                link: "/offres-directes?category=particuliers&scope=professional"
               },
               {
                 icon: GraduationCap,
                 title: "Élèves",
                 desc: "Prenez une longueur d'avance en maîtrisant les outils IA et la recherche numérique.",
-                link: "/offres-directes?category=eleves"
+                link: "/offres-directes?category=eleves&scope=professional"
               },
               {
                 icon: BookOpen,
                 title: "Étudiants",
                 desc: "Optimisez votre productivité académique et construisez votre profil professionnel.",
-                link: "/offres-directes?category=etudiants"
+                link: "/offres-directes?category=etudiants&scope=professional"
               }
             ].map((offer, i) => (
               <div key={i} className="bg-white p-12 rounded-[4rem] border border-slate-100 shadow-sm group hover:shadow-2xl hover:-translate-y-4 transition-all duration-500">
@@ -359,7 +359,7 @@ const Home: React.FC = () => {
           
           <div className="mt-20 text-center">
             <button 
-              onClick={() => navigate('/offres-directes')}
+              onClick={() => navigate('/offres-directes?scope=professional')}
               className="px-12 py-6 bg-slate-950 text-white rounded-2xl font-black uppercase text-[11px] tracking-[0.2em] hover:bg-emerald-600 transition-all shadow-xl"
             >
               Voir toutes les offres directes

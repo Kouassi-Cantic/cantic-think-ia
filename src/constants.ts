@@ -30,6 +30,7 @@ export const NAVIGATION = [
     children: [
       { name: 'Conseil stratégique', path: '/services?section=conseil', icon: Landmark },
       { name: 'Ingénierie IA et Data', path: '/services?section=data', icon: Workflow },
+      { name: 'Offres Directes', path: '/offres-directes', icon: Package },
       { name: 'Réalisations (ROI)', path: '/applications', icon: Lightbulb },
       { name: 'Simulateur ROI IA', path: '/roi-simulator', icon: Calculator },
     ]
