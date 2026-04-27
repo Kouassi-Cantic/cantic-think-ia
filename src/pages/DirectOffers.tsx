@@ -383,14 +383,14 @@ const DirectOffers: React.FC = () => {
     return true;
   });
 
-  const [activeCategory, setActiveCategory] = useState(filteredCategories[0]?.id || 'visibilite');
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   useEffect(() => {
     const category = params.get('category');
-    if (category && CATEGORIES.some(cat => cat.id === category)) {
+    if (category && filteredCategories.some(cat => cat.id === category)) {
       setActiveCategory(category);
-    } else if (filteredCategories.length > 0 && !filteredCategories.some(cat => cat.id === activeCategory)) {
-        setActiveCategory(filteredCategories[0].id);
+    } else if (filteredCategories.length > 0) {
+      setActiveCategory(filteredCategories[0].id);
     }
   }, [location, scope]);
   
