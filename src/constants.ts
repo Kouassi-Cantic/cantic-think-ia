@@ -1,4 +1,4 @@
-import { Building2, GraduationCap, Landmark, Workflow, Lightbulb, BookOpen, Rocket, Scale, User, Calculator, MessageSquare, Users } from 'lucide-react';
+import { Building2, GraduationCap, Landmark, Workflow, Lightbulb, BookOpen, Rocket, Scale, User, Calculator, MessageSquare, Users, Package } from 'lucide-react';
 import { Persona, DigitalResource } from './types';
 
 export const BRAND = {
