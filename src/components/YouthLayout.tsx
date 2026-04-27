@@ -24,7 +24,7 @@ const YouthLayout: React.FC = () => {
                     </Link>
                     <div className="flex items-center gap-6 text-sm font-bold tracking-widest uppercase">
                         <Link to="/forum" className="hover:text-indigo-300 flex items-center gap-2"><MessageSquare size={16}/> Forum</Link>
-                        <Link to="/offres-directes" className="hover:text-indigo-300 flex items-center gap-2"><Rocket size={16}/> Offres</Link>
+                        <Link to="/offres-directes?scope=youth" className="hover:text-indigo-300 flex items-center gap-2"><Rocket size={16}/> Offres</Link>
                         <Link to="/forum/new" className="hover:text-indigo-300 flex items-center gap-2"><HelpCircle size={16}/> Poser une question</Link>
                         <button onClick={handleLogout} className="text-rose-400 hover:text-rose-300 flex items-center gap-2"><LogOut size={16}/> Déconnexion</button>
                     </div>

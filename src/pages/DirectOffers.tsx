@@ -376,7 +376,8 @@ const DirectOffers: React.FC = () => {
   
   const params = new URLSearchParams(location.search);
   const scope = params.get('scope'); // 'youth' or 'professional' (or all if undefined)
-  
+  console.log('DirectOffers: location.search =', location.search, ', scope =', scope);
+
   const filteredCategories = CATEGORIES.filter(cat => {
     if (scope === 'youth') return cat.id === 'eleves' || cat.id === 'etudiants';
     if (scope === 'professional') return cat.id !== 'eleves' && cat.id !== 'etudiants';
