@@ -18,7 +18,7 @@ export const BRAND = {
 export const BRANDING = {
   name: "CANTIC THINK IA",
   slogan: "Penser l'utile",
-  logoUrl: "/favicon.png", 
+  logoUrl: "https://firebasestorage.googleapis.com/v0/b/cantic-think-ia-491512.firebasestorage.app/o/logo.png?alt=media&token=631892af-28c8-4eeb-b9b5-6ffa91a1680e",
   founderImageUrl: "https://firebasestorage.googleapis.com/v0/b/cantic-think-ia.firebasestorage.app/o/kouassi-ourega-goble-fondateur-cantic-think-ia.jpg?alt=media&token=4eb730a3-7a1b-4e98-a20c-da82afcedc41",
 };
 
