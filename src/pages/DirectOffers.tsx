@@ -528,7 +528,7 @@ const DirectOffers: React.FC = () => {
                 <Target className="w-6 h-6 text-emerald-600" />
               </div>
               <div>
-                <h3 className="text-lg font-serif font-bold text-slate-900 mb-2 italic">Notre Vision : Accompagner le cycle de vie du succès</h3>
+                <h3 className="text-lg font-serif font-bold text-slate-900 mb-2 italic">Notre vision : accompagner le cycle de vie du succès</h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
                   Nous croyons que <span className="font-bold text-emerald-600">l'élève d'aujourd'hui est l'entrepreneur de demain</span>. 
                   C'est pourquoi nous proposons des offres accessibles dès le cursus scolaire, afin de créer une relation de confiance durable. 
