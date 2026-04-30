@@ -85,7 +85,7 @@ export const PostEditor: React.FC = () => {
       <div className="hidden md:block">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/cantic-think-ia-491512.firebasestorage.app/o/Jeunes.png?alt=media&token=26c80ee1-a767-4f08-b042-b72e1b62e1eb"
-          alt="Illustration Forum Jeunes"
+          alt="Illustration Echanges Jeunes"
           className="w-full h-auto rounded-3xl shadow-2xl object-cover"
           referrerPolicy="no-referrer"
         />

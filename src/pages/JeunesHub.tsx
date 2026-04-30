@@ -28,7 +28,7 @@ const JeunesHub: React.FC = () => {
                         <div className="p-4 rounded-2xl bg-violet-50 mb-6 group-hover:bg-violet-600 transition-colors">
                             <MessageSquare className="w-8 h-8 text-violet-600 group-hover:text-white transition-colors" />
                         </div>
-                        <h2 className="text-2xl font-bold mb-2">Forum Étudiants</h2>
+                        <h2 className="text-2xl font-bold mb-2">Echanges Étudiants</h2>
                         <p className="text-slate-500 text-sm font-medium">Échange, t'entraide et grandis avec la communauté.</p>
                     </Link>
 

@@ -33,7 +33,7 @@ export const ForumList: React.FC = () => {
         <div className="flex justify-between items-center mb-10">
           <div>
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-slate-900 mb-2">
-              Le Forum IA <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">🚀</span>
+              Les Échanges IA <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">🚀</span>
             </h1>
             <p className="text-slate-500 font-medium text-lg">Rejoins la conversation, partage, grandis.</p>
           </div>
