@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { ProjectIdeaModal } from '../../components/ProjectIdeaModal';
 
 const LaboProjets: React.FC = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isIdeationModalOpen, setIsIdeationModalOpen] = useState(false);
+    const [isPlanningModalOpen, setIsPlanningModalOpen] = useState(false);
+    const [isLaunchModalOpen, setIsLaunchModalOpen] = useState(false);
     const [idea, setIdea] = useState<{ title: string; problem: string; solution: string } | null>(null);
     const navigate = useNavigate();
 
@@ -19,9 +21,9 @@ const LaboProjets: React.FC = () => {
             
             <div className="grid md:grid-cols-3 gap-8 mb-12">
                 {[
-                    { icon: Lightbulb, title: "Idéation", desc: "Définit ton problème et ta solution.", action: () => setIsModalOpen(true) },
-                    { icon: Rocket, title: "Planification", desc: "Structure les étapes clés.", action: undefined },
-                    { icon: CheckCircle2, title: "Concrétisation", desc: "Lance ton MVP / projet.", action: undefined }
+                    { icon: Lightbulb, title: "Idéation", desc: "Définit ton problème et ta solution.", action: () => setIsIdeationModalOpen(true) },
+                    { icon: Rocket, title: "Planification", desc: "Structure les étapes clés.", action: () => setIsPlanningModalOpen(true) },
+                    { icon: CheckCircle2, title: "Concrétisation", desc: "Lance ton MVP / projet.", action: () => setIsLaunchModalOpen(true) }
                 ].map((step, idx) => (
                     <div 
                         key={idx} 
@@ -48,13 +50,33 @@ const LaboProjets: React.FC = () => {
             </div>
 
             <ProjectIdeaModal 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)}
+                isOpen={isIdeationModalOpen} 
+                onClose={() => setIsIdeationModalOpen(false)}
                 onSave={handleSaveIdea}
                 initialTitle={idea?.title}
                 initialProblem={idea?.problem}
                 initialSolution={idea?.solution}
             />
+
+            {/* Placeholder for planning modal */}
+            {isPlanningModalOpen && (
+              <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
+                <div className="bg-slate-950 p-8 rounded-3xl border border-slate-800 w-full max-w-lg text-white">
+                  <h2 className="text-2xl font-bold mb-4">Planification (à venir)</h2>
+                  <button onClick={() => setIsPlanningModalOpen(false)} className="px-6 py-2 bg-indigo-600 rounded">Fermer</button>
+                </div>
+              </div>
+            )}
+
+            {/* Placeholder for launch modal */}
+            {isLaunchModalOpen && (
+              <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
+                <div className="bg-slate-950 p-8 rounded-3xl border border-slate-800 w-full max-w-lg text-white">
+                  <h2 className="text-2xl font-bold mb-4">Concrétisation (à venir)</h2>
+                  <button onClick={() => setIsLaunchModalOpen(false)} className="px-6 py-2 bg-indigo-600 rounded">Fermer</button>
+                </div>
+              </div>
+            )}
         </div>
     );
 };
