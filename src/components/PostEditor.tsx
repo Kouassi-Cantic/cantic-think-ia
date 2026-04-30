@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db, auth } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const PostEditor: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -9,6 +9,15 @@ export const PostEditor: React.FC = () => {
   const [categoryId, setCategoryId] = useState('');
   const [categories, setCategories] = useState<{id: string, name: string}[]>([]);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Populate from navigation state if available
+    if (location.state && location.state.idea) {
+      setTitle(`Projet : ${location.state.idea.problem.substring(0, 30)}...`);
+      setContent(`Problème: ${location.state.idea.problem}\n\nSolution: ${location.state.idea.solution}`);
+    }
+  }, [location.state]);
 
   useEffect(() => {
     const fetchCategories = async () => {

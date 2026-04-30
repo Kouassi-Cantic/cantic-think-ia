@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Rocket, Lightbulb, CheckCircle2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { ProjectIdeaModal } from '../../components/ProjectIdeaModal';
 
 const LaboProjets: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idea, setIdea] = useState<{ problem: string; solution: string } | null>(null);
+    const navigate = useNavigate();
 
     const handleSaveIdea = (problem: string, solution: string) => {
         setIdea({ problem, solution });
@@ -38,6 +40,7 @@ const LaboProjets: React.FC = () => {
                 <p className="text-slate-300 mb-6"> {idea ? "Ton idée est prête à être partagée !" : "Partage ton idée avec la communauté pour obtenir des feedbacks."}</p>
                 <button 
                     disabled={!idea}
+                    onClick={() => navigate('/forum/new', { state: { idea } })}
                     className={`px-8 py-3 rounded-xl font-bold transition ${idea ? 'bg-indigo-600 hover:bg-indigo-500' : 'bg-slate-700 text-slate-400 cursor-not-allowed'}`}
                 >
                     Proposer une idée
