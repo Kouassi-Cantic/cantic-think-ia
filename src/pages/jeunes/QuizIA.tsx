@@ -51,12 +51,12 @@ const QuizIA: React.FC = () => {
         <div className="p-8 text-white max-w-4xl mx-auto">
             <h1 className="text-4xl font-black mb-4">Quiz IA</h1>
             <div className="grid md:grid-cols-2 gap-8 items-center mb-8">
-              <p>Teste tes connaissances et progresse...</p>
               <img 
                 src="https://firebasestorage.googleapis.com/v0/b/cantic-think-ia-491512.firebasestorage.app/o/Jeunesse.png?alt=media&token=1e92d214-9ce1-4ed0-9613-91c9691f8b90" 
                 alt="Jeunesse" 
                 className="rounded-xl shadow-lg w-full"
               />
+              <p>Teste tes connaissances et progresse...</p>
             </div>
             {showResults ? (
                 <div className="bg-slate-900 p-8 rounded-xl text-center">
