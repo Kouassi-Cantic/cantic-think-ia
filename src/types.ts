@@ -238,3 +238,13 @@ export interface ForumPost {
   status: 'draft' | 'review' | 'analyzed';
   adminAnalysis?: string;
 }
+
+export interface Victory {
+  id?: string;
+  userId: string;
+  userName: string;
+  title: string;
+  description: string;
+  category: 'IA' | 'Technique' | 'Autre';
+  createdAt: string;
+}

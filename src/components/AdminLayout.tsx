@@ -6,7 +6,7 @@ import {
   MessageSquare, Calendar, 
   FileText, GraduationCap,
   ChevronRight, Sparkles, ShieldCheck,
-  Briefcase, Banknote, Mail, Rocket
+  Briefcase, Banknote, Mail, Rocket, Lightbulb
 } from 'lucide-react';
 import Logo from './Logo';
 
