@@ -44,7 +44,8 @@ service cloud.firestore {
     match /forum_posts/{docId} {
       allow read: if true;
       allow create: if isAuthenticated() && isValidPost(request.resource.data);
-      allow update, delete: if isAuthenticated() && (request.auth.uid == resource.data.authorId || isAdmin());
+      allow update: if isAuthenticated() && (request.auth.uid == resource.data.authorId || isAdmin());
+      allow delete: if isAuthenticated() && ((request.auth.uid == resource.data.authorId && resource.data.status == 'draft') || isAdmin());
     }
     match /forum_comments/{docId} {
       allow read: if true;

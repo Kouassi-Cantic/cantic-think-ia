@@ -26,6 +26,7 @@ const AdminLayout: React.FC = () => {
     { icon: GraduationCap, label: 'Formations', path: '/admin/training' },
     { icon: ShoppingBag, label: 'Boutique', path: '/admin/shop' },
     { icon: MessageSquare, label: 'Réflexions', path: '/admin/blog' },
+    { icon: Lightbulb, label: 'Labo Projets', path: '/admin/labo-projets' },
     { icon: Banknote, label: 'Flux Financiers', path: '/admin/transactions' },
     { icon: Rocket, label: 'Offres Directes', path: '/admin/quotes' },
     { icon: Mail, label: 'Communication', path: '/admin/contacts' },

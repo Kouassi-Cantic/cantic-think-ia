@@ -47,6 +47,7 @@ import ClientLogin from './pages/ClientLogin';
 // Protected Pages
 import AdminDashboard from './pages/AdminDashboard';
 import ClientDashboard from './pages/ClientDashboard';
+import AdminLaboProjets from './pages/AdminLaboProjets';
 
 const App: React.FC = () => {
   const RootElement = () => {
@@ -112,6 +113,7 @@ const App: React.FC = () => {
               <Route path="shop" element={<AdminDashboard />} />
               <Route path="training" element={<AdminDashboard />} />
               <Route path="blog" element={<AdminDashboard />} />
+              <Route path="labo-projets" element={<AdminLaboProjets />} />
               <Route path="bookings" element={<AdminDashboard />} />
               <Route path="cases" element={<AdminDashboard />} />
               <Route path="transactions" element={<AdminDashboard />} />

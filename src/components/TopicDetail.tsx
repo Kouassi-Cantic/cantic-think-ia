@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { doc, onSnapshot, collection, query, where, orderBy, addDoc } from 'firebase/firestore';
+import { doc, onSnapshot, collection, query, where, orderBy, addDoc, runTransaction, deleteDoc } from 'firebase/firestore';
 import { db, auth } from '../firebase';
-
-interface ForumPost {
-  title: string;
-  content: string;
-  authorId: string;
-  createdAt: string;
-}
+import { ForumPost } from '../types';
 
 interface ForumComment {
   id: string;
@@ -71,12 +65,89 @@ const TopicDetail: React.FC = () => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!postId || !confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')) return;
+
+    try {
+      await deleteDoc(doc(db, 'forum_posts', postId));
+      alert('Projet supprimé !');
+      navigate('/forum');
+    } catch (error) {
+      console.error('Erreur suppression:', error);
+      alert('Erreur lors de la suppression. Vous ne pouvez peut-être pas supprimer ce projet.');
+    }
+  };
+
+  const handleVote = async () => {
+    if (!auth.currentUser || !postId) return alert('Vous devez être connecté.');
+
+    try {
+      const postRef = doc(db, 'forum_posts', postId);
+      const voteRef = doc(db, 'forum_posts', postId, 'votes', auth.currentUser.uid);
+
+      await runTransaction(db, async (transaction) => {
+        const postDoc = await transaction.get(postRef);
+        if (!postDoc.exists()) throw "Post does not exist!";
+        
+        const voteDoc = await transaction.get(voteRef);
+        if (voteDoc.exists()) throw "Vous avez déjà voté!";
+        
+        const currentVotes = postDoc.data().votes || 0;
+        const newVotes = currentVotes + 1;
+        
+        transaction.set(voteRef, { userId: auth.currentUser!.uid, createdAt: new Date().toISOString() });
+        transaction.update(postRef, { 
+          votes: newVotes,
+          status: newVotes >= 5 ? 'review' : (postDoc.data().status || 'draft')
+        });
+      });
+      alert('Vote pris en compte !');
+    } catch (error) {
+      console.error('Erreur vote:', error);
+      alert(typeof error === 'string' ? error : 'Erreur lors du vote.');
+    }
+  };
+
+  const handleShare = () => {
+    if (navigator.share) {
+        navigator.share({
+            title: post.title,
+            url: window.location.href,
+        });
+    } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert('Lien copié !');
+    }
+  };
+
   if (!post) return <div>Chargement...</div>;
 
   return (
     <div className="p-6 pt-32 max-w-2xl mx-auto">
       <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
       <p className="text-gray-600 mb-6">{post.content}</p>
+      
+      <div className="flex gap-4 mb-8">
+        <button onClick={handleVote} className="bg-indigo-600 text-white px-4 py-2 rounded">
+          Voter ({post.votes || 0})
+        </button>
+        <button onClick={handleShare} className="bg-gray-200 text-gray-800 px-4 py-2 rounded">
+          Partager
+        </button>
+        {post.status === 'review' && <span className="text-yellow-600 font-bold">En cours d'analyse</span>}
+        {auth.currentUser?.uid === post.authorId && post.status === 'draft' && (
+          <button onClick={handleDelete} className="bg-red-600 text-white px-4 py-2 rounded">
+            Supprimer
+          </button>
+        )}
+      </div>
+
+        {post.status === 'analyzed' && (
+            <div className="mt-4 mb-4 p-4 bg-indigo-50 border-l-4 border-indigo-500">
+                <h3 className="font-bold text-indigo-900">Analyse de l'Admin :</h3>
+                <p className="text-indigo-800">{post.adminAnalysis}</p>
+            </div>
+        )}
 
       <div className="space-y-4 mb-8">
         <h2 className="text-xl font-bold">Commentaires</h2>

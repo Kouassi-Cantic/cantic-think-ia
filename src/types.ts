@@ -227,3 +227,14 @@ export interface AuditLog {
   details?: string;
   createdAt: string;
 }
+
+export interface ForumPost {
+  id?: string;
+  title: string;
+  content: string;
+  authorId: string;
+  createdAt: string;
+  votes: number;
+  status: 'draft' | 'review' | 'analyzed';
+  adminAnalysis?: string;
+}
