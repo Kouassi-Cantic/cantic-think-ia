@@ -4,22 +4,24 @@ import { X } from 'lucide-react';
 interface ProjectIdeaModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (problem: string, solution: string) => void;
+  onSave: (title: string, problem: string, solution: string) => void;
+  initialTitle?: string;
   initialProblem?: string;
   initialSolution?: string;
 }
 
 export const ProjectIdeaModal: React.FC<ProjectIdeaModalProps> = ({ 
-  isOpen, onClose, onSave, initialProblem = '', initialSolution = '' 
+  isOpen, onClose, onSave, initialTitle = '', initialProblem = '', initialSolution = '' 
 }) => {
+  const [title, setTitle] = useState(initialTitle);
   const [problem, setProblem] = useState(initialProblem);
   const [solution, setSolution] = useState(initialSolution);
 
   if (!isOpen) return null;
 
   const handleSave = () => {
-    if (problem.trim() && solution.trim()) {
-      onSave(problem, solution);
+    if (title.trim() && problem.trim() && solution.trim()) {
+      onSave(title, problem, solution);
       onClose();
     }
   };
@@ -31,6 +33,14 @@ export const ProjectIdeaModal: React.FC<ProjectIdeaModalProps> = ({
           <X size={24} />
         </button>
         <h2 className="text-2xl font-bold text-white mb-6">Définit ton idée</h2>
+        
+        <label className="block text-sm font-medium text-slate-400 mb-2">Quel est le titre de ton projet ?</label>
+        <input 
+          value={title} 
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full p-4 bg-slate-900 rounded-xl text-white mb-4 border border-slate-800"
+          placeholder="Mon super projet..."
+        />
         
         <label className="block text-sm font-medium text-slate-400 mb-2">Quel problème veux-tu résoudre ?</label>
         <textarea 
@@ -52,7 +62,7 @@ export const ProjectIdeaModal: React.FC<ProjectIdeaModalProps> = ({
         
         <button 
           onClick={handleSave}
-          disabled={!problem.trim() || !solution.trim()}
+          disabled={!title.trim() || !problem.trim() || !solution.trim()}
           className="w-full px-8 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold transition disabled:opacity-50"
         >
           Valider mon idée

@@ -5,11 +5,11 @@ import { ProjectIdeaModal } from '../../components/ProjectIdeaModal';
 
 const LaboProjets: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [idea, setIdea] = useState<{ problem: string; solution: string } | null>(null);
+    const [idea, setIdea] = useState<{ title: string; problem: string; solution: string } | null>(null);
     const navigate = useNavigate();
 
-    const handleSaveIdea = (problem: string, solution: string) => {
-        setIdea({ problem, solution });
+    const handleSaveIdea = (title: string, problem: string, solution: string) => {
+        setIdea({ title, problem, solution });
     };
 
     return (
@@ -51,6 +51,7 @@ const LaboProjets: React.FC = () => {
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)}
                 onSave={handleSaveIdea}
+                initialTitle={idea?.title}
                 initialProblem={idea?.problem}
                 initialSolution={idea?.solution}
             />
