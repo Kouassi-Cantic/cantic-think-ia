@@ -1,5 +1,5 @@
 import React from 'react';
-import { TalentQuiz } from '../../components/TalentQuiz';
+import { TalentQuiz } from '@/src/components/TalentQuiz';
 
 const TalentExplorer: React.FC = () => (
     <div className="p-8 text-white max-w-4xl mx-auto">
