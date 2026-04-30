@@ -14,7 +14,7 @@ export const PostEditor: React.FC = () => {
   useEffect(() => {
     // Populate from navigation state if available
     if (location.state && location.state.idea) {
-      setTitle(`Projet : ${location.state.idea.problem.substring(0, 30)}...`);
+      setTitle(`Projet : ${location.state.idea.title}`);
       setContent(`Problème: ${location.state.idea.problem}\n\nSolution: ${location.state.idea.solution}`);
     }
   }, [location.state]);
