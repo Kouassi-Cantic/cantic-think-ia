@@ -8,6 +8,7 @@ import { Leaderboard } from '../../components/Leaderboard';
 import { FriendsList } from '../../components/FriendsList';
 
 const UserProfile: React.FC = () => {
+    const [user, setUser] = useState(auth.currentUser);
     const [stats, setStats] = useState<{ totalPoints: number; badges: string[], bio?: string, title?: string } | null>(null);
     const [projects, setProjects] = useState<{ milestones: ProjectMilestone[]; launch: ProjectLaunch } | null>(null);
     const [isEditing, setIsEditing] = useState(false);
@@ -15,34 +16,36 @@ const UserProfile: React.FC = () => {
     const [newTitle, setNewTitle] = useState('');
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            if (!auth.currentUser) return;
-            const uid = auth.currentUser.uid;
+        const unsubscribe = auth.onAuthStateChanged((u) => {
+            setUser(u);
+            if (u) {
+                const fetchUserData = async () => {
+                    const uid = u.uid;
+                    // Fetch Stats
+                    const statsSnap = await getDoc(doc(db, 'user_stats', uid));
+                    if (statsSnap.exists()) {
+                        const data = statsSnap.data() as any;
+                        setStats(data);
+                        setNewBio(data.bio || '');
+                        setNewTitle(data.title || '');
+                    }
 
-            // Fetch Stats
-            const statsSnap = await getDoc(doc(db, 'user_stats', uid));
-            if (statsSnap.exists()) {
-                const data = statsSnap.data() as any;
-                setStats(data);
-                setNewBio(data.bio || '');
-                setNewTitle(data.title || '');
+                    // Fetch Projects
+                    const projSnap = await getDoc(doc(db, 'user_projects', uid));
+                    if (projSnap.exists()) setProjects(projSnap.data() as any);
+                };
+                fetchUserData();
             }
-
-            // Fetch Projects
-            const projSnap = await getDoc(doc(db, 'user_projects', uid));
-            if (projSnap.exists()) setProjects(projSnap.data() as any);
-        };
-        fetchUserData();
+        });
+        return unsubscribe;
     }, []);
 
     const saveProfile = async () => {
-        if (!auth.currentUser) return;
-        await updateDoc(doc(db, 'user_stats', auth.currentUser.uid), { bio: newBio, title: newTitle });
+        if (!user) return;
+        await updateDoc(doc(db, 'user_stats', user.uid), { bio: newBio, title: newTitle });
         setStats(prev => prev ? {...prev, bio: newBio, title: newTitle} : null);
         setIsEditing(false);
     };
-
-    const user = auth.currentUser;
 
     return (
         <div className="p-8 text-white max-w-6xl mx-auto space-y-8">
