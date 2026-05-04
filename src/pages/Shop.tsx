@@ -6,10 +6,8 @@ import { collection, onSnapshot, query, addDoc, doc } from "firebase/firestore";
 import { DigitalResource, Transaction } from '../types';
 import SEO from '../components/SEO';
 
-// @ts-ignore
-import * as pdfjsLib from 'https://esm.sh/pdfjs-dist@4.0.379?bundle';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://esm.sh/pdfjs-dist@4.0.379/build/pdf.worker.mjs`;
+/* No global PDF imports now */
 
 const LimitedPdfViewer: React.FC<{ url: string; price: number; onAcquire: () => void; onClose: () => void; maxPages?: number }> = ({ url, price, onAcquire, onClose, maxPages = 5 }) => {
   const [pages, setPages] = useState<string[]>([]);
@@ -24,6 +22,10 @@ const LimitedPdfViewer: React.FC<{ url: string; price: number; onAcquire: () => 
         setLoading(true);
         setError(null);
         setPages([]);
+        
+        // Dynamically import pdfjs
+        const pdfjsLib = await import('https://esm.sh/pdfjs-dist@4.0.379?bundle');
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://esm.sh/pdfjs-dist@4.0.379/build/pdf.worker.mjs`;
         
         const loadingTask = pdfjsLib.getDocument({
           url: url,

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import ErrorBoundary from './components/ErrorBoundary';
+import PageLoader from './components/PageLoader';
 
 // Layouts
 import Layout from './components/Layout';
@@ -12,43 +13,43 @@ import AdminLayout from './components/AdminLayout';
 import AdminRoute from './components/AdminRoute';
 import ClientRoute from './components/ClientRoute';
 
-// Public Pages
-import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
-import Applications from './pages/Applications';
-import Training from './pages/Training';
-import Shop from './pages/Shop';
-import Blog from './pages/Blog';
-import JeunesHub from './pages/JeunesHub';
-import ForumList from './components/ForumList';
-import PostEditor from './components/PostEditor';
-import TopicDetail from './components/TopicDetail';
-import Contact from './pages/Contact';
-import Legal from './pages/Legal';
-import DirectOffers from './pages/DirectOffers';
-import ROISimulatorPage from './pages/ROISimulatorPage';
-import ServiceConseil from './pages/ServiceConseil';
-import ServiceIngenierie from './pages/ServiceIngenierie';
-import ServiceAutomatisation from './pages/ServiceAutomatisation';
-import ServiceGouvernance from './pages/ServiceGouvernance';
-import ServiceFormation from './pages/ServiceFormation';
-import ServiceDeveloppement from './pages/ServiceDeveloppement';
-import TalentExplorer from './pages/jeunes/TalentExplorer';
-import LaboProjets from './pages/jeunes/LaboProjets';
-import MurVictoires from './pages/jeunes/MurVictoires';
-import QuizIA from './pages/jeunes/QuizIA';
-import UserProfile from './pages/jeunes/UserProfile';
-import NotFound from './pages/NotFound';
+// Lazy Pages
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const Services = lazy(() => import('./pages/Services'));
+const Applications = lazy(() => import('./pages/Applications'));
+const Training = lazy(() => import('./pages/Training'));
+const Shop = lazy(() => import('./pages/Shop'));
+const Blog = lazy(() => import('./pages/Blog'));
+const JeunesHub = lazy(() => import('./pages/JeunesHub'));
+const ForumList = lazy(() => import('./components/ForumList'));
+const PostEditor = lazy(() => import('./components/PostEditor'));
+const TopicDetail = lazy(() => import('./components/TopicDetail'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Legal = lazy(() => import('./pages/Legal'));
+const DirectOffers = lazy(() => import('./pages/DirectOffers'));
+const ROISimulatorPage = lazy(() => import('./pages/ROISimulatorPage'));
+const ServiceConseil = lazy(() => import('./pages/ServiceConseil'));
+const ServiceIngenierie = lazy(() => import('./pages/ServiceIngenierie'));
+const ServiceAutomatisation = lazy(() => import('./pages/ServiceAutomatisation'));
+const ServiceGouvernance = lazy(() => import('./pages/ServiceGouvernance'));
+const ServiceFormation = lazy(() => import('./pages/ServiceFormation'));
+const ServiceDeveloppement = lazy(() => import('./pages/ServiceDeveloppement'));
+const TalentExplorer = lazy(() => import('./pages/jeunes/TalentExplorer'));
+const LaboProjets = lazy(() => import('./pages/jeunes/LaboProjets'));
+const MurVictoires = lazy(() => import('./pages/jeunes/MurVictoires'));
+const QuizIA = lazy(() => import('./pages/jeunes/QuizIA'));
+const UserProfile = lazy(() => import('./pages/jeunes/UserProfile'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Auth Pages
-import AdminLogin from './pages/AdminLogin';
-import ClientLogin from './pages/ClientLogin';
+const AdminLogin = lazy(() => import('./pages/AdminLogin'));
+const ClientLogin = lazy(() => import('./pages/ClientLogin'));
 
 // Protected Pages
-import AdminDashboard from './pages/AdminDashboard';
-import ClientDashboard from './pages/ClientDashboard';
-import AdminLaboProjets from './pages/AdminLaboProjets';
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const ClientDashboard = lazy(() => import('./pages/ClientDashboard'));
+const AdminLaboProjets = lazy(() => import('./pages/AdminLaboProjets'));
 
 const App: React.FC = () => {
   const RootElement = () => {
@@ -60,9 +61,10 @@ const App: React.FC = () => {
     <HelmetProvider>
       <ErrorBoundary>
         <Router>
-          <Routes>
-            {/* Conditional Routes with Switchable Layout */}
-            <Route path="/" element={<RootElement />}>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              {/* Conditional Routes with Switchable Layout */}
+              <Route path="/" element={<RootElement />}>
               <Route index element={<Home />} />
               <Route path="a-propos" element={<About />} />
               <Route path="services" element={<Services />} />
@@ -127,6 +129,7 @@ const App: React.FC = () => {
             {/* 404 Route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+        </Suspense>
         </Router>
       </ErrorBoundary>
     </HelmetProvider>
