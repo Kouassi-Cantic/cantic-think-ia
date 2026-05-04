@@ -126,7 +126,9 @@
       "properties": {
         "userId": { "type": "string" },
         "totalPoints": { "type": "number" },
-        "badges": { "type": "array" }
+        "badges": { "type": "array" },
+        "bio": { "type": "string" },
+        "title": { "type": "string" }
       },
       "required": ["userId", "totalPoints"]
     },
@@ -140,7 +142,30 @@
         "launch": { "type": "object" }
       },
       "required": ["userId"]
-    }
+    },
+    "activities": {
+      "title": "Flux d'Activité",
+      "description": "Dernières actions des utilisateurs.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "type": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "type", "description", "createdAt"]
+    },
+    "friends": {
+        "title": "Réseau / Amis",
+        "description": "Liaisons entre utilisateurs.",
+        "type": "object",
+        "properties": {
+            "userId": { "type": "string" },
+            "friendId": { "type": "string" },
+            "createdAt": { "type": "string", "format": "date-time" }
+        },
+        "required": ["userId", "friendId", "createdAt"]
+    },
     "forum_comments": {
       "title": "Commentaire de Forum",
       "description": "Réponse à un post de forum.",
@@ -165,6 +190,8 @@
     "victories": { "schema": "victories", "description": "Collection du mur des victoires" },
     "victory_likes": { "schema": "victory_likes", "description": "Collection des likes sur les victoires" },
     "user_stats": { "schema": "user_stats", "description": "Collection des stats des jeunes" },
-    "user_projects": { "schema": "user_projects", "description": "Collection de projets des jeunes" }
+    "user_projects": { "schema": "user_projects", "description": "Collection de projets des jeunes" },
+    "activities": { "schema": "activities", "description": "Collection des activités" },
+    "friends": { "schema": "friends", "description": "Collection des réseaux / amis" }
   }
 }
