@@ -528,11 +528,21 @@ const DirectOffers: React.FC = () => {
                 <Target className="w-6 h-6 text-emerald-600" />
               </div>
               <div>
-                <h3 className="text-lg font-serif font-bold text-slate-900 mb-2 italic">Notre vision : accompagner le cycle de vie du succès</h3>
+                <h3 className="text-lg font-serif font-bold text-slate-900 mb-2 italic">
+                  {scope === 'professional' 
+                    ? "Notre vision : l'accélération de votre performance digitale" 
+                    : "Notre vision : accompagner le cycle de vie du succès"
+                  }
+                </h3>
                 <p className="text-slate-600 text-sm leading-relaxed">
-                  Nous croyons que <span className="font-bold text-emerald-600">l'élève d'aujourd'hui est l'entrepreneur de demain</span>. 
-                  C'est pourquoi nous proposons des offres accessibles dès le cursus scolaire, afin de créer une relation de confiance durable. 
-                  Miser sur les bons outils numériques dès maintenant, c'est s'assurer une longueur d'avance pour vos futurs projets professionnels.
+                  {scope === 'professional'
+                    ? "Nous transformons vos défis numériques en leviers de croissance concrets. Plus qu'un simple prestataire, nous sommes votre partenaire technologique pour structurer, automatiser et scaler vos activités avec des solutions pensées pour le ROI."
+                    : <>
+                        Nous croyons que <span className="font-bold text-emerald-600">l'élève d'aujourd'hui est l'entrepreneur de demain</span>. 
+                        C'est pourquoi nous proposons des offres accessibles dès le cursus scolaire, afin de créer une relation de confiance durable. 
+                        Miser sur les bons outils numériques dès maintenant, c'est s'assurer une longueur d'avance pour vos futurs projets professionnels.
+                      </>
+                  }
                 </p>
               </div>
             </div>
