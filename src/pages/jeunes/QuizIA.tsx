@@ -48,37 +48,40 @@ const QuizIA: React.FC = () => {
     };
 
     return (
-        <div className="p-8 text-white max-w-4xl mx-auto">
+        <div className="p-8 text-white max-w-6xl mx-auto">
             <h1 className="text-4xl font-black mb-4">Quiz IA</h1>
-            <div className="grid md:grid-cols-2 gap-8 items-center mb-8">
+            <p className="mb-8">Teste tes connaissances et progresse...</p>
+            
+            <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div>
+                {showResults ? (
+                    <div className="bg-slate-900 p-8 rounded-xl text-center">
+                        <h2 className="text-2xl font-bold mb-4">Résultat : {score} / {questions.length}</h2>
+                        <button onClick={resetQuiz} className="bg-indigo-600 px-6 py-2 rounded">Recommencer</button>
+                    </div>
+                ) : (
+                    <div className="bg-slate-900 p-8 rounded-xl">
+                        <h2 className="text-xl font-bold mb-6">{questions[currentQuestion].question}</h2>
+                        <div className="grid gap-4">
+                            {questions[currentQuestion].options.map((option, index) => (
+                                <button 
+                                    key={index} 
+                                    onClick={() => handleAnswer(index)} 
+                                    className="w-full text-left p-4 bg-slate-800 rounded hover:bg-slate-700 transition"
+                                >
+                                    {option}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                )}
+              </div>
               <img 
                 src="https://firebasestorage.googleapis.com/v0/b/cantic-think-ia-491512.firebasestorage.app/o/Jeunesse.png?alt=media&token=1e92d214-9ce1-4ed0-9613-91c9691f8b90" 
                 alt="Jeunesse" 
                 className="rounded-xl shadow-lg w-full"
               />
-              <p>Teste tes connaissances et progresse...</p>
             </div>
-            {showResults ? (
-                <div className="bg-slate-900 p-8 rounded-xl text-center">
-                    <h2 className="text-2xl font-bold mb-4">Résultat : {score} / {questions.length}</h2>
-                    <button onClick={resetQuiz} className="bg-indigo-600 px-6 py-2 rounded">Recommencer</button>
-                </div>
-            ) : (
-                <div className="bg-slate-900 p-8 rounded-xl">
-                    <h2 className="text-xl font-bold mb-6">{questions[currentQuestion].question}</h2>
-                    <div className="grid gap-4">
-                        {questions[currentQuestion].options.map((option, index) => (
-                            <button 
-                                key={index} 
-                                onClick={() => handleAnswer(index)} 
-                                className="w-full text-left p-4 bg-slate-800 rounded hover:bg-slate-700 transition"
-                            >
-                                {option}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
