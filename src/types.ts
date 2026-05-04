@@ -248,3 +248,13 @@ export interface Victory {
   category: 'IA' | 'Technique' | 'Autre';
   createdAt: string;
 }
+
+export interface ProjectMilestone {
+  title: string;
+  dueDate: string;
+}
+
+export interface ProjectLaunch {
+  mvpDescription: string;
+  launchDate: string;
+}

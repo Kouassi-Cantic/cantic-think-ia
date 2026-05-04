@@ -2,13 +2,30 @@ import React, { useState } from 'react';
 import { Rocket, Lightbulb, CheckCircle2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { ProjectIdeaModal } from '../../components/ProjectIdeaModal';
+import { doc, setDoc } from 'firebase/firestore';
+import { db, auth } from '../../firebase';
 
 const LaboProjets: React.FC = () => {
     const [isIdeationModalOpen, setIsIdeationModalOpen] = useState(false);
     const [isPlanningModalOpen, setIsPlanningModalOpen] = useState(false);
     const [isLaunchModalOpen, setIsLaunchModalOpen] = useState(false);
     const [idea, setIdea] = useState<{ title: string; problem: string; solution: string } | null>(null);
+    const [milestones, setMilestones] = useState([{ title: '', dueDate: '' }]);
+    const [mvpDescription, setMvpDescription] = useState('');
+    const [launchDate, setLaunchDate] = useState('');
     const navigate = useNavigate();
+
+    const savePlanning = async () => {
+        if (!auth.currentUser) return;
+        await setDoc(doc(db, 'user_projects', auth.currentUser.uid), { milestones }, { merge: true });
+        setIsPlanningModalOpen(false);
+    };
+
+    const saveLaunch = async () => {
+        if (!auth.currentUser) return;
+        await setDoc(doc(db, 'user_projects', auth.currentUser.uid), { launch: { mvpDescription, launchDate } }, { merge: true });
+        setIsLaunchModalOpen(false);
+    };
 
     const handleSaveIdea = (title: string, problem: string, solution: string) => {
         setIdea({ title, problem, solution });
@@ -58,22 +75,45 @@ const LaboProjets: React.FC = () => {
                 initialSolution={idea?.solution}
             />
 
-            {/* Placeholder for planning modal */}
+            {/* Planning Modal */}
             {isPlanningModalOpen && (
               <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
                 <div className="bg-slate-950 p-8 rounded-3xl border border-slate-800 w-full max-w-lg text-white">
-                  <h2 className="text-2xl font-bold mb-4">Planification (à venir)</h2>
-                  <button onClick={() => setIsPlanningModalOpen(false)} className="px-6 py-2 bg-indigo-600 rounded">Fermer</button>
+                  <h2 className="text-2xl font-bold mb-4">Planification</h2>
+                  {milestones.map((m, i) => (
+                      <div key={i} className="flex gap-2 mb-2">
+                        <input value={m.title} onChange={e => {
+                            const newM = [...milestones];
+                            newM[i].title = e.target.value;
+                            setMilestones(newM);
+                        }} placeholder="Jalon" className="w-full p-2 bg-slate-800 rounded" />
+                        <input type="date" value={m.dueDate} onChange={e => {
+                           const newM = [...milestones];
+                           newM[i].dueDate = e.target.value;
+                           setMilestones(newM);
+                        }} className="p-2 bg-slate-800 rounded" />
+                      </div>
+                  ))}
+                  <button onClick={() => setMilestones([...milestones, {title: '', dueDate: ''}])} className="text-sm text-indigo-400 mb-4">+ Ajouter</button>
+                  <div className="flex gap-4">
+                    <button onClick={() => setIsPlanningModalOpen(false)} className="px-6 py-2 bg-slate-700 rounded">Fermer</button>
+                    <button onClick={savePlanning} className="px-6 py-2 bg-indigo-600 rounded">Enregistrer</button>
+                  </div>
                 </div>
               </div>
             )}
 
-            {/* Placeholder for launch modal */}
+            {/* Launch Modal */}
             {isLaunchModalOpen && (
               <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
                 <div className="bg-slate-950 p-8 rounded-3xl border border-slate-800 w-full max-w-lg text-white">
-                  <h2 className="text-2xl font-bold mb-4">Concrétisation (à venir)</h2>
-                  <button onClick={() => setIsLaunchModalOpen(false)} className="px-6 py-2 bg-indigo-600 rounded">Fermer</button>
+                  <h2 className="text-2xl font-bold mb-4">Concrétisation</h2>
+                  <textarea placeholder="Description du MVP" value={mvpDescription} onChange={e => setMvpDescription(e.target.value)} className="w-full mb-4 p-2 bg-slate-800 rounded h-24" />
+                  <input type="date" value={launchDate} onChange={e => setLaunchDate(e.target.value)} className="w-full mb-4 p-2 bg-slate-800 rounded" />
+                  <div className="flex gap-4">
+                    <button onClick={() => setIsLaunchModalOpen(false)} className="px-6 py-2 bg-slate-700 rounded">Fermer</button>
+                    <button onClick={saveLaunch} className="px-6 py-2 bg-indigo-600 rounded">Enregistrer</button>
+                  </div>
                 </div>
               </div>
             )}

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
+import { db, auth } from '../../firebase';
 
 interface Question {
   question: string;
@@ -28,6 +30,7 @@ const QuizIA: React.FC = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
     const [showResults, setShowResults] = useState(false);
+    const [pointsSaved, setPointsSaved] = useState(false);
 
     const handleAnswer = (index: number) => {
         if (index === questions[currentQuestion].correct) {
@@ -38,13 +41,27 @@ const QuizIA: React.FC = () => {
             setCurrentQuestion(currentQuestion + 1);
         } else {
             setShowResults(true);
+            savePoints(score + (index === questions[currentQuestion].correct ? 1 : 0));
         }
+    };
+
+    const savePoints = async (finalScore: number) => {
+        if (!auth.currentUser || pointsSaved) return;
+        const statsRef = doc(db, 'user_stats', auth.currentUser.uid);
+        const snap = await getDoc(statsRef);
+        if(snap.exists()) {
+            await updateDoc(statsRef, { totalPoints: (snap.data().totalPoints || 0) + finalScore * 10 });
+        } else {
+            await setDoc(statsRef, { userId: auth.currentUser.uid, totalPoints: finalScore * 10, badges: [] });
+        }
+        setPointsSaved(true);
     };
 
     const resetQuiz = () => {
         setCurrentQuestion(0);
         setScore(0);
         setShowResults(false);
+        setPointsSaved(false);
     };
 
     return (

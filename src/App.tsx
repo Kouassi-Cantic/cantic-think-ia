@@ -38,6 +38,7 @@ import TalentExplorer from './pages/jeunes/TalentExplorer';
 import LaboProjets from './pages/jeunes/LaboProjets';
 import MurVictoires from './pages/jeunes/MurVictoires';
 import QuizIA from './pages/jeunes/QuizIA';
+import UserProfile from './pages/jeunes/UserProfile';
 import NotFound from './pages/NotFound';
 
 // Auth Pages
@@ -80,6 +81,7 @@ const App: React.FC = () => {
               <Route path="labo-projets" element={<LaboProjets />} />
               <Route path="mur-victoires" element={<MurVictoires />} />
               <Route path="quiz-ia" element={<QuizIA />} />
+              <Route path="profil" element={<UserProfile />} />
               <Route path="roi-simulator" element={<ROISimulatorPage />} />
               <Route path="service-conseil" element={<ServiceConseil />} />
               <Route path="service-ingenierie" element={<ServiceIngenierie />} />

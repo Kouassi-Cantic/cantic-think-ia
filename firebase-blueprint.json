@@ -87,10 +87,60 @@
         "content": { "type": "string" },
         "authorId": { "type": "string" },
         "categoryId": { "type": "string" },
-        "createdAt": { "type": "string", "format": "date-time" }
+        "createdAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string" },
+        "adminAnalysis": { "type": "string" }
       },
       "required": ["title", "content", "authorId", "categoryId", "createdAt"]
     },
+    "victories": {
+      "title": "Victoire",
+      "description": "Succès partagé sur le mur des victoires.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "likes": { "type": "array" }
+      },
+      "required": ["userId", "userName", "title", "description", "category", "createdAt"]
+    },
+    "victory_likes": {
+      "title": "Like de Victoire",
+      "description": "Like sur une victoire.",
+      "type": "object",
+      "properties": {
+        "victoryId": { "type": "string" },
+        "userId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["victoryId", "userId", "createdAt"]
+    },
+    "user_stats": {
+      "title": "Statistiques Utilisateur",
+      "description": "Points et badges d'un utilisateur.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "totalPoints": { "type": "number" },
+        "badges": { "type": "array" }
+      },
+      "required": ["userId", "totalPoints"]
+    },
+    "user_projects": {
+      "title": "Projets Utilisateur",
+      "description": "Données de planification et lancement de projets.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "milestones": { "type": "array" },
+        "launch": { "type": "object" }
+      },
+      "required": ["userId"]
+    }
     "forum_comments": {
       "title": "Commentaire de Forum",
       "description": "Réponse à un post de forum.",
@@ -111,6 +161,10 @@
     "auditLogs": { "schema": "auditLogs", "description": "Collection des journaux d'audit" },
     "forum_categories": { "schema": "forum_categories", "description": "Collection des catégories du forum" },
     "forum_posts": { "schema": "forum_posts", "description": "Collection des posts du forum" },
-    "forum_comments": { "schema": "forum_comments", "description": "Collection des commentaires du forum" }
+    "forum_comments": { "schema": "forum_comments", "description": "Collection des commentaires du forum" },
+    "victories": { "schema": "victories", "description": "Collection du mur des victoires" },
+    "victory_likes": { "schema": "victory_likes", "description": "Collection des likes sur les victoires" },
+    "user_stats": { "schema": "user_stats", "description": "Collection des stats des jeunes" },
+    "user_projects": { "schema": "user_projects", "description": "Collection de projets des jeunes" }
   }
 }

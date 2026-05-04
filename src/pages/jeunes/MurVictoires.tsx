@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, query, onSnapshot, orderBy } from 'firebase/firestore';
+import { collection, addDoc, query, onSnapshot, orderBy, doc, deleteDoc, getDoc, setDoc, getDocs } from 'firebase/firestore';
 import { db, auth } from '../../firebase';
 import { Victory } from '../../types';
 
 const MurVictoires: React.FC = () => {
-    const [victories, setVictories] = useState<Victory[]>([]);
+    const [victories, setVictories] = useState<(Victory & { likes: number; hasLiked: boolean })[]>([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState<'IA' | 'Technique' | 'Autre'>('IA');
 
     useEffect(() => {
         const q = query(collection(db, 'victories'), orderBy('createdAt', 'desc'));
-        const unsub = onSnapshot(q, (snapshot) => {
-            setVictories(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Victory)));
+        const unsub = onSnapshot(q, async (snapshot) => {
+            const data = await Promise.all(snapshot.docs.map(async (vDoc) => {
+                const v = { id: vDoc.id, ...vDoc.data() } as Victory;
+                const likesSnap = await getDocs(collection(db, 'victories', vDoc.id, 'likes'));
+                const hasLiked = auth.currentUser ? (await getDoc(doc(db, 'victories', vDoc.id, 'likes', auth.currentUser.uid))).exists() : false;
+                return { ...v, likes: likesSnap.size, hasLiked };
+            }));
+            setVictories(data);
         });
         return unsub;
     }, []);
@@ -31,6 +37,16 @@ const MurVictoires: React.FC = () => {
         });
         setTitle('');
         setDescription('');
+    };
+
+    const toggleLike = async (victoryId: string, hasLiked: boolean) => {
+        if (!auth.currentUser) return;
+        const likeRef = doc(db, 'victories', victoryId, 'likes', auth.currentUser.uid);
+        if (hasLiked) {
+            await deleteDoc(likeRef);
+        } else {
+            await setDoc(likeRef, { createdAt: new Date().toISOString() });
+        }
     };
 
     return (
@@ -61,7 +77,12 @@ const MurVictoires: React.FC = () => {
             <div className="grid gap-6 mt-12">
                 {victories.map(v => (
                     <div key={v.id} className="bg-slate-900 p-6 rounded-xl border border-slate-700">
-                        <h2 className="text-xl font-bold">{v.title} <span className="text-xs bg-indigo-900 px-2 py-1 rounded">{v.category}</span></h2>
+                        <div className="flex justify-between">
+                            <h2 className="text-xl font-bold">{v.title} <span className="text-xs bg-indigo-900 px-2 py-1 rounded">{v.category}</span></h2>
+                            <button onClick={() => toggleLike(v.id!, v.hasLiked)} className={`text-sm ${v.hasLiked ? 'text-red-500' : 'text-slate-400'}`}>
+                                {v.hasLiked ? '❤️' : '🤍'} {v.likes}
+                            </button>
+                        </div>
                         <p className="text-slate-400 mt-2">{v.description}</p>
                         <p className="text-sm text-slate-500 mt-4 italic">Par {v.userName}</p>
                     </div>

@@ -52,7 +52,7 @@ const JeunesHub: React.FC = () => {
                         <div className="p-4 rounded-2xl bg-rose-50 mb-6 group-hover:bg-rose-600 transition-colors">
                             <MessageSquare className="w-8 h-8 text-rose-600 group-hover:text-white transition-colors" />
                         </div>
-                        <h2 className="text-2xl font-bold mb-2">Mur des Victoires</h2>
+                        <h2 className="text-2xl font-bold mb-2">Mur des victoires</h2>
                         <p className="text-slate-500 text-sm font-medium">Partage tes astuces IA qui ont changé la donne.</p>
                     </Link>
 

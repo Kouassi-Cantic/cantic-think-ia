@@ -1,42 +1,38 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    function isAuthenticated() {
-      return request.auth != null;
-    }
-
-    function isAdmin() {
+    // --- Helpers ---
+    function isAuthenticated() { return request.auth != null; }
+    function isAdmin() { 
       return isAuthenticated() && 
         (exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
-         request.auth.token.email == "teletechnologyci@gmail.com" ||
-         request.auth.token.email == "ourega.goble@CANTIC-THINK-IA.work");
+         request.auth.token.email in ["teletechnologyci@gmail.com", "ourega.goble@CANTIC-THINK-IA.work"]); 
     }
-
-    match /admins {
-      allow list: if isAuthenticated();
-      match /{docId} {
-        allow read: if isAuthenticated() && (request.auth.uid == docId || isAdmin());
-        allow write: if isAdmin();
-      }
-    }
-
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
     function isValidPost(data) {
       return data.keys().hasAll(['title', 'content', 'authorId', 'categoryId', 'createdAt']) &&
              data.title is string && data.title.size() > 0 && data.title.size() < 200 &&
              data.content is string && data.content.size() > 0 && data.content.size() < 5000 &&
-             data.authorId is string && data.authorId.size() > 0 &&
+             data.authorId is string && data.authorId == request.auth.uid &&
              data.categoryId is string && data.categoryId.size() > 0 &&
+             data.createdAt is string; // Should ideally check server time
+    }
+    function isValidVictory(data) {
+      return data.keys().hasAll(['userId', 'userName', 'title', 'description', 'category', 'createdAt']) &&
+             data.userId is string && data.userId == request.auth.uid &&
+             data.title is string && data.title.size() > 0 && data.title.size() < 200 &&
+             data.description is string && data.description.size() > 0 && data.description.size() < 2000 &&
+             data.category in ['IA', 'Technique', 'Autre'] &&
              data.createdAt is string;
     }
 
-    function isValidComment(data) {
-      return data.keys().hasAll(['content', 'authorId', 'postId', 'createdAt']) &&
-             data.content is string && data.content.size() > 0 && data.content.size() < 2000 &&
-             data.authorId is string && data.authorId.size() > 0 &&
-             data.postId is string && data.postId.size() > 0 &&
-             data.createdAt is string;
-    }
+    // --- Rules ---
+    match /{document=**} { allow read, write: if false; }
 
+    match /admins/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow write: if isAdmin();
+    }
     match /forum_categories/{docId} {
       allow read: if true;
       allow write: if isAdmin();
@@ -47,14 +43,23 @@ service cloud.firestore {
       allow update: if isAuthenticated() && (request.auth.uid == resource.data.authorId || isAdmin());
       allow delete: if isAuthenticated() && ((request.auth.uid == resource.data.authorId && resource.data.status == 'draft') || isAdmin());
     }
-    match /forum_comments/{docId} {
+    match /victories/{docId} {
       allow read: if true;
-      allow create: if isAuthenticated() && isValidComment(request.resource.data);
-      allow update, delete: if isAuthenticated() && (request.auth.uid == resource.data.authorId || isAdmin());
+      allow create: if isAuthenticated() && isValidVictory(request.resource.data);
+      allow update, delete: if isAuthenticated() && (request.auth.uid == resource.data.userId || isAdmin());
+      
+      match /likes/{userId} {
+        allow read: if true;
+        allow write: if isAuthenticated() && request.auth.uid == userId;
+      }
     }
-
-    match /{document=**} {
-      allow read, write: if true;
+    match /user_stats/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+    match /user_projects/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow write: if isAuthenticated() && request.auth.uid == userId;
     }
   }
 }
