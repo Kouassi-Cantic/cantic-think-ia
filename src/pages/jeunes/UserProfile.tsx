@@ -84,13 +84,18 @@ const UserProfile: React.FC = () => {
                         <h2 className="text-2xl font-bold">Progression & Badges</h2>
                     </div>
                     <div className="text-center p-6 bg-slate-800 rounded-2xl mb-6">
-                        <p className="text-sm text-slate-400 uppercase tracking-widest">Score Total</p>
+                        <p className="text-sm text-slate-400 uppercase tracking-widest">Score Total (Gouttes)</p>
                         <p className="text-5xl font-black text-indigo-400">{stats?.totalPoints || 0}</p>
+                        { (stats?.totalPoints || 0) >= 150 ? <p className="text-yellow-400 font-bold mt-2">Colibri d'Or</p> :
+                          (stats?.totalPoints || 0) >= 50 ? <p className="text-slate-300 font-bold mt-2">Colibri d'Argent</p> :
+                          (stats?.totalPoints || 0) >= 10 ? <p className="text-amber-700 font-bold mt-2">Colibri de Bronze</p> :
+                          <p className="text-slate-400 font-bold mt-2">Apprenti Colibri</p>
+                        }
                     </div>
                     <div className="flex flex-wrap gap-3">
                         {stats?.badges?.length 
                             ? stats.badges.map((b, i) => <span key={i} className="bg-indigo-600 px-4 py-2 rounded-full text-sm font-semibold">{b}</span>)
-                            : <p className="text-slate-500 italic">Aucun badge pour l'instant...</p>
+                            : <p className="text-slate-500 italic">Continuez de déposer vos gouttes !</p>
                         }
                     </div>
                 </div>

@@ -40,6 +40,7 @@ const LaboProjets = lazy(() => import('./pages/jeunes/LaboProjets'));
 const MurVictoires = lazy(() => import('./pages/jeunes/MurVictoires'));
 const QuizIA = lazy(() => import('./pages/jeunes/QuizIA'));
 const UserProfile = lazy(() => import('./pages/jeunes/UserProfile'));
+const ManifesteColibri = lazy(() => import('./pages/ManifesteColibri'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Auth Pages
@@ -73,6 +74,7 @@ const App: React.FC = () => {
               <Route path="boutique" element={<Shop />} />
               <Route path="blog" element={<Blog />} />
               <Route path="jeunes" element={<JeunesHub />} />
+              <Route path="manifeste-colibri" element={<ManifesteColibri />} />
               <Route path="forum" element={<ForumList />} />
               <Route path="forum/new" element={<PostEditor />} />
               <Route path="forum/post/:postId" element={<TopicDetail />} />

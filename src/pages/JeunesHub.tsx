@@ -16,6 +16,7 @@ const JeunesHub: React.FC = () => {
                         </p>
                         <p className="text-indigo-900 font-bold mt-6">
                             Ici, chaque question, chaque partage, chaque projet est ton goutte d'eau. <strong>Rejoins la communauté et fais ta part.</strong>
+                            <br /><Link to="/manifeste-colibri" className="text-indigo-700 underline text-sm hover:text-emerald-700">Lire le manifeste complet</Link>
                         </p>
                     </div>
                 </div>
