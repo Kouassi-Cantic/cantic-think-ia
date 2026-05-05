@@ -85,7 +85,13 @@ const ChatbotIA: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    if (scrollRef.current) {
+      requestAnimationFrame(() => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+      });
+    }
   }, [messages, isOpen]);
 
   const handleSend = async (e: React.FormEvent) => {
@@ -146,7 +152,7 @@ const ChatbotIA: React.FC = () => {
                 <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Stratégie en direct</span>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:bg-white/10 p-2 rounded-lg transition-colors"><X className="w-5 h-5" /></button>
+            <button onClick={() => setIsOpen(false)} aria-label="Fermer le chat" className="hover:bg-white/10 p-2 rounded-lg transition-colors"><X className="w-5 h-5" /></button>
           </div>
           
           <div ref={scrollRef} className="flex-grow p-6 overflow-y-auto space-y-6 bg-slate-50/50">
@@ -172,12 +178,13 @@ const ChatbotIA: React.FC = () => {
               placeholder="Posez votre question..."
               className="flex-grow bg-slate-100 rounded-xl px-5 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
             />
-            <button type="submit" className="bg-[#0f172a] text-white p-3 rounded-xl hover:bg-emerald-600 transition-all shadow-lg"><Send className="w-4 h-4" /></button>
+            <button type="submit" aria-label="Envoyer le message" className="bg-[#0f172a] text-white p-3 rounded-xl hover:bg-emerald-600 transition-all shadow-lg"><Send className="w-4 h-4" /></button>
           </form>
         </div>
       ) : (
         <button 
           onClick={() => setIsOpen(true)}
+          aria-label="Ouvrir le chat"
           className="w-16 h-16 bg-[#0f172a] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group"
         >
           <div className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white animate-pulse"></div>

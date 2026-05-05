@@ -11,7 +11,7 @@ const JeunesHub: React.FC = () => {
                         Bienvenue dans ton <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">univers IA</span> ✨
                     </h1>
                     <p className="text-xl text-slate-500 max-w-2xl mx-auto">
-                        Explore, apprends et construis le futur avec Cantic Think IA. Tout est là, rien que pour toi.
+                        Comme le colibri qui fait sa part, chaque goutte compte. Explore, partage et contribue à l'avènement des IA au sein de notre communauté. Ensemble, bâtissons le futur.
                     </p>
                 </div>
                 

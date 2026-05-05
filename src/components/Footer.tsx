@@ -52,22 +52,22 @@ const Footer: React.FC = () => {
               Expertise senior en Afrique depuis 2014.
             </p>
             <div className="flex space-x-5">
-              <a href="https://web.facebook.com/canticthinkia" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-emerald-600 transition-colors">
+              <a href="https://web.facebook.com/canticthinkia" target="_blank" rel="noopener noreferrer" aria-label="Suivre Cantic Think IA sur Facebook" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-emerald-600 transition-colors">
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
               </a>
-              <a href="https://twitter.com/CanticThinkIA" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-emerald-600 transition-colors">
+              <a href="https://twitter.com/CanticThinkIA" target="_blank" rel="noopener noreferrer" aria-label="Suivre Cantic Think IA sur Twitter" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-emerald-600 transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="https://www.linkedin.com/in/cantic-think-ia-408a343bb/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-emerald-600 transition-colors">
+              <a href="https://www.linkedin.com/in/cantic-think-ia-408a343bb/" target="_blank" rel="noopener noreferrer" aria-label="Suivre Cantic Think IA sur LinkedIn" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-emerald-600 transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
           </div>
 
           <div>
-            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-slate-500 mb-8">Veille Stratégique</h4>
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-slate-500 mb-8">Veille Stratégique</p>
             <div className="space-y-6">
               <p className="text-xs text-slate-400 font-light leading-relaxed">Recevez nos notes de prospective et analyses IA directement dans votre boîte mail.</p>
               {status === 'success' ? (
@@ -98,7 +98,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-slate-500 mb-8">Intelligence</h4>
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-slate-500 mb-8">Intelligence</p>
             <ul className="space-y-4 text-slate-400 font-medium text-sm">
               <li><Link to="/formations" className="hover:text-emerald-500 transition-colors">Executive Education</Link></li>
               <li><Link to="/boutique" className="hover:text-emerald-500 transition-colors">Ressources stratégiques</Link></li>
@@ -107,7 +107,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-slate-500 mb-8">Contact</h4>
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-slate-500 mb-8">Contact</p>
             <ul className="space-y-4 text-slate-400 font-medium text-sm">
               <li className="flex items-start space-x-3"><Mail className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" /><span className="break-all">commercial@canticthinkia.work</span></li>
               <li className="flex items-start space-x-3"><Phone className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" /><span>+225 25 22 00 12 39</span></li>
@@ -136,7 +136,7 @@ const Footer: React.FC = () => {
               <span className="opacity-0 group-hover:opacity-100 transition-opacity">Accès Sécurisé</span>
             </Link>
           </div>
-          <div className="flex space-x-8 text-xs font-bold text-slate-500 uppercase tracking-widest">
+          <div className="flex space-x-8 text-xs font-bold text-slate-300 uppercase tracking-widest">
             <Link to="/legal" className="hover:text-white transition-colors">Mentions légales</Link>
             <Link to="/legal" className="hover:text-white transition-colors">CGU</Link>
           </div>

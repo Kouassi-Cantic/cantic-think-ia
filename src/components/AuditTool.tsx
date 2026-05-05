@@ -55,7 +55,7 @@ const AuditTool: React.FC = () => {
       <div className="mb-12 flex justify-between items-end">
         <div>
           <span className="text-[10px] font-black text-emerald-600 uppercase tracking-[0.3em] mb-2 block">Section {step + 1}</span>
-          <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{AUDIT_QUESTIONS[step].category}</h4>
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{AUDIT_QUESTIONS[step].category}</p>
         </div>
         <span className="text-2xl font-serif italic text-slate-200">0{step + 1}</span>
       </div>

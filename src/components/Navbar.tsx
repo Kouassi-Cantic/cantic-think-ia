@@ -56,6 +56,7 @@ const Navbar: React.FC = () => {
               {/* SEARCH TRIGGER */}
               <button 
                 onClick={triggerSearch}
+                aria-label="Ouvrir la recherche"
                 className={`group flex items-center gap-3 px-4 py-2 rounded-full transition-all border ${scrolled ? 'border-slate-200 bg-slate-50/50 text-slate-500 hover:border-primary/20 hover:bg-white' : (isHome ? 'border-slate-200 bg-slate-50/50 text-slate-500 hover:border-primary/20 hover:bg-white' : 'border-slate-200 text-slate-500 hover:border-primary/20')}`}
               >
                 <Search className={`w-3.5 h-3.5 transition-colors ${scrolled ? 'group-hover:text-primary' : (isHome ? 'group-hover:text-primary' : 'group-hover:text-primary')}`} />
@@ -68,6 +69,7 @@ const Navbar: React.FC = () => {
               {/* DIRECT MEMBER LOGIN */}
               <Link 
                 to={isLoggedIn ? "/client/dashboard" : "/client/login"}
+                aria-label={isLoggedIn ? "Accéder à mon espace" : "Se connecter"}
                 className={`group p-2.5 rounded-full transition-all border ${scrolled ? 'border-slate-200 bg-slate-50/50 text-slate-500 hover:border-primary/20 hover:bg-white hover:text-primary' : (isHome ? 'border-slate-200 bg-slate-50/50 text-slate-500 hover:border-primary/20 hover:bg-white hover:text-primary' : 'border-slate-200 text-slate-500 hover:border-primary/20 hover:text-primary')}`}
                 title={isLoggedIn ? "Mon Espace" : "Espace Membre"}
               >
@@ -133,13 +135,13 @@ const Navbar: React.FC = () => {
           </div>
 
           <div className="lg:hidden flex items-center gap-4 relative z-[950]">
-            <Link to={isLoggedIn ? "/client/dashboard" : "/client/login"} className={`p-2 rounded-xl transition-colors ${isOpen ? 'text-slate-900 bg-slate-100' : (scrolled ? 'text-slate-900 bg-slate-100' : (isHome ? 'text-slate-900 bg-slate-100' : 'text-slate-900 bg-slate-100'))}`}>
+            <Link to={isLoggedIn ? "/client/dashboard" : "/client/login"} aria-label={isLoggedIn ? "Accéder à mon espace" : "Se connecter"} className={`p-2 rounded-xl transition-colors ${isOpen ? 'text-slate-900 bg-slate-100' : (scrolled ? 'text-slate-900 bg-slate-100' : (isHome ? 'text-slate-900 bg-slate-100' : 'text-slate-900 bg-slate-100'))}`}>
               <User className={`w-5 h-5 ${isLoggedIn ? 'text-primary' : ''}`} />
             </Link>
-            <button onClick={triggerSearch} className={`p-2 rounded-xl transition-colors ${isOpen ? 'text-slate-900 bg-slate-100' : (scrolled ? 'text-slate-900 bg-slate-100' : (isHome ? 'text-slate-900 bg-slate-100' : 'text-slate-900 bg-slate-100'))}`}>
+            <button onClick={triggerSearch} aria-label="Ouvrir la recherche" className={`p-2 rounded-xl transition-colors ${isOpen ? 'text-slate-900 bg-slate-100' : (scrolled ? 'text-slate-900 bg-slate-100' : (isHome ? 'text-slate-900 bg-slate-100' : 'text-slate-900 bg-slate-100'))}`}>
               <Search className="w-5 h-5" />
             </button>
-            <button onClick={() => setIsOpen(!isOpen)} className={`p-2 rounded-xl transition-colors ${isOpen ? 'text-slate-900 bg-slate-100' : (scrolled ? 'text-slate-900 bg-slate-100' : (isHome ? 'text-slate-900 bg-slate-100' : 'text-slate-900 bg-slate-100'))}`}>
+            <button onClick={() => setIsOpen(!isOpen)} aria-label="Ouvrir le menu navigation" className={`p-2 rounded-xl transition-colors ${isOpen ? 'text-slate-900 bg-slate-100' : (scrolled ? 'text-slate-900 bg-slate-100' : (isHome ? 'text-slate-900 bg-slate-100' : 'text-slate-900 bg-slate-100'))}`}>
               {isOpen ? <X /> : <Menu />}
             </button>
           </div>

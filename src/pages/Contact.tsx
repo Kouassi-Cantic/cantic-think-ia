@@ -126,7 +126,7 @@ const Contact: React.FC = () => {
                   <item.icon className="w-5 h-5 text-emerald-600 group-hover:text-white transition-colors" />
                 </div>
                 <div>
-                  <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">{item.label}</p>
+                  <p className="text-[8px] font-black uppercase tracking-widest text-slate-600">{item.label}</p>
                   <a href={item.href} className="text-xs font-bold text-slate-900 hover:text-emerald-600 transition-colors truncate block max-w-[180px]">{item.value}</a>
                 </div>
               </div>
@@ -146,7 +146,7 @@ const Contact: React.FC = () => {
                 <h2 className="text-4xl lg:text-6xl font-serif font-black italic text-slate-950 leading-[0.9] tracking-tighter mb-8">
                   AGENDA <br /> <span className="text-emerald-500">EXPERT.</span>
                 </h2>
-                <p className="text-slate-400 font-light italic leading-relaxed max-w-md">
+                <p className="text-slate-600 font-light italic leading-relaxed max-w-md">
                   « Réservez votre session stratégique directement dans notre planning. Pas d'attente, pas d'intermédiaire. »
                 </p>
               </div>
@@ -166,7 +166,7 @@ const Contact: React.FC = () => {
                     <CheckCircle2 className="w-12 h-12" />
                   </div>
                   <h3 className="text-3xl font-serif font-black text-slate-900 mb-6">MESSAGE TRANSMIS.</h3>
-                  <p className="text-slate-500 font-light mb-12 leading-relaxed italic">« Votre demande a été enregistrée dans nos protocoles. Un expert reviendra vers vous incessamment. »</p>
+                  <p className="text-slate-600 font-light mb-12 leading-relaxed italic">« Votre demande a été enregistrée dans nos protocoles. Un expert reviendra vers vous incessamment. »</p>
                   <button onClick={() => setIsSuccess(false)} className="px-12 py-5 bg-slate-900 text-white rounded-2xl font-black uppercase text-[11px] tracking-widest hover:bg-emerald-600 transition-all">
                     Envoyer un autre message
                   </button>
@@ -175,7 +175,7 @@ const Contact: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-10">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-3">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-4">Nom Complet</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-600 ml-4">Nom Complet</label>
                       <input 
                         type="text" 
                         required 
@@ -186,7 +186,7 @@ const Contact: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-3">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-4">Email</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-600 ml-4">Email</label>
                       <input 
                         type="email" 
                         required 
@@ -199,7 +199,7 @@ const Contact: React.FC = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-4">Institution / Entreprise</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-600 ml-4">Institution / Entreprise</label>
                     <input 
                       type="text" 
                       required 
@@ -211,7 +211,7 @@ const Contact: React.FC = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-4">Objet</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-600 ml-4">Objet</label>
                     <select 
                       value={formData.subject}
                       onChange={e => setFormData({...formData, subject: e.target.value})}
@@ -226,7 +226,7 @@ const Contact: React.FC = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-4">Message</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-600 ml-4">Message</label>
                     <textarea 
                       required 
                       rows={6}
@@ -266,7 +266,7 @@ const Contact: React.FC = () => {
             ].map((faq, i) => (
               <div key={i} className="p-10 bg-slate-50 rounded-[3rem] border border-slate-100">
                 <h4 className="text-xl font-serif font-bold text-slate-900 mb-4">{faq.q}</h4>
-                <p className="text-slate-500 font-light text-sm leading-relaxed italic">« {faq.a} »</p>
+                <p className="text-slate-600 font-light text-sm leading-relaxed italic">« {faq.a} »</p>
               </div>
             ))}
           </div>

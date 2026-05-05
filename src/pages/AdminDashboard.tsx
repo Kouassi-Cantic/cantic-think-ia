@@ -498,7 +498,7 @@ const AdminDashboard: React.FC = () => {
           order: 2,
           visualType: "hero",
           url: "https://cerclecitoyen.ci",
-          logoUrl: "https://nfsskgcpqbccnwacsplc.supabase.co/storage/v1/object/public/Logo-cercle-citoyen/logo-cercle-citoyen.png",
+          logoUrl: "/logo-cercle-citoyen.png",
           createdAt: new Date().toISOString()
         });
       }

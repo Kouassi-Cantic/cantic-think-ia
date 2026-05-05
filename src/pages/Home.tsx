@@ -105,7 +105,7 @@ const Home: React.FC = () => {
                 EXPERTISE <br /> SYSTÉMIQUE.
               </h2>
             </div>
-            <p className="text-slate-400 font-light max-w-sm text-lg leading-relaxed">
+            <p className="text-slate-600 font-light max-w-sm text-lg leading-relaxed">
               De l'audit stratégique à l'implémentation technique, nous couvrons l'ensemble de la chaîne de valeur de l'IA.
             </p>
           </div>
@@ -136,7 +136,7 @@ const Home: React.FC = () => {
                   <service.icon className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-slate-900 mb-6 group-hover:text-emerald-600 transition-colors">{service.title}</h3>
-                <p className="text-slate-500 font-light leading-relaxed mb-10 italic">« {service.desc} »</p>
+                <p className="text-slate-600 font-light leading-relaxed mb-10 italic">« {service.desc} »</p>
                 <button onClick={() => navigate('/services')} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-slate-900 group-hover:text-emerald-600 transition-colors">
                   Détails <ChevronRight className="w-4 h-4" />
                 </button>
@@ -154,7 +154,7 @@ const Home: React.FC = () => {
             <h2 className="text-3xl md:text-5xl lg:text-7xl font-serif font-black italic text-slate-950 leading-[0.9] tracking-tighter mb-8">
               UNE APPROCHE <br /> SYSTÉMIQUE.
             </h2>
-            <p className="text-slate-400 font-light text-xl leading-relaxed">
+            <p className="text-slate-600 font-light text-xl leading-relaxed">
               Nous ne nous contentons pas d'installer des outils. Nous transformons votre structure de pensée.
             </p>
           </div>
@@ -181,12 +181,12 @@ const Home: React.FC = () => {
               }
             ].map((item, i) => (
               <div key={i} className="relative p-12 bg-slate-50 rounded-[3rem] border border-slate-100 group hover:bg-slate-950 transition-all duration-500">
-                <span className="text-6xl font-serif font-black text-slate-200 absolute top-8 right-8 group-hover:text-white/10 transition-colors">{item.step}</span>
+                <span className="text-6xl font-serif font-black text-slate-400 absolute top-8 right-8 group-hover:text-white/10 transition-colors">{item.step}</span>
                 <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:bg-emerald-500 transition-colors">
                   <item.icon className="w-8 h-8 text-emerald-600 group-hover:text-white transition-colors" />
                 </div>
-                <h4 className="text-2xl font-serif font-bold text-slate-900 mb-4 group-hover:text-white transition-colors">{item.title}</h4>
-                <p className="text-slate-500 font-light text-sm leading-relaxed group-hover:text-slate-400 transition-colors">{item.desc}</p>
+                <h3 className="text-2xl font-serif font-bold text-slate-900 mb-4 group-hover:text-white transition-colors">{item.title}</h3>
+                <p className="text-slate-600 font-light text-sm leading-relaxed group-hover:text-slate-400 transition-colors">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -204,16 +204,16 @@ const Home: React.FC = () => {
                   CERCLE <br /> CITOYEN.
                 </h2>
               </div>
-              <p className="text-slate-500 font-light text-lg leading-relaxed italic">
+              <p className="text-slate-600 font-light text-lg leading-relaxed italic">
                 « Digitaliser l'engagement citoyen et renforcer le lien social à travers une infrastructure souveraine et sécurisée pour la République de Côte d'Ivoire. »
               </p>
               <div className="grid grid-cols-2 gap-8 py-8 border-y border-slate-50">
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-2">Impact</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 block mb-2">Impact</span>
                   <span className="text-2xl font-serif font-bold text-emerald-600">+50k Citoyens</span>
                 </div>
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-2">Efficacité</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 block mb-2">Efficacité</span>
                   <span className="text-2xl font-serif font-bold text-emerald-600">-40% Délais</span>
                 </div>
               </div>
@@ -240,7 +240,7 @@ const Home: React.FC = () => {
               </div>
               <div className="relative z-10 w-full max-w-sm aspect-square bg-white/5 backdrop-blur-3xl rounded-[3rem] border border-white/10 p-12 flex items-center justify-center shadow-2xl">
                 <img 
-                  src="https://nfsskgcpqbccnwacsplc.supabase.co/storage/v1/object/public/Logo-cercle-citoyen/logo-cercle-citoyen.png" 
+                  src="/logo-cercle-citoyen.png" 
                   alt="Cercle Citoyen Logo" 
                   className="w-full h-full object-contain"
                   referrerPolicy="no-referrer"

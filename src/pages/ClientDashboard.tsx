@@ -11,7 +11,7 @@ import {
   Rocket, Facebook, MessageCircle
 } from 'lucide-react';
 import { db } from '../firebase';
-import { collection, query, where, onSnapshot, orderBy, doc, getDoc, setDoc, updateDoc, limit } from "firebase/firestore";
+import { collection, query, where, onSnapshot, getDocs, orderBy, doc, getDoc, setDoc, updateDoc, limit } from "firebase/firestore";
 import { Transaction, DigitalResource, ClientProfile, BlogPost, TrainingCourse, QuoteRequest } from '../types';
 import Logo from '../components/Logo';
 
@@ -139,14 +139,20 @@ const ClientDashboard: React.FC = () => {
     });
 
     // 3. Charger les articles de blog (Veille)
-    const unsubBlog = onSnapshot(query(collection(db, "blog"), orderBy("createdAt", "desc"), limit(6)), (snapshot) => {
-      setBlogPosts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as BlogPost[]);
-    });
+    const loadBlog = async () => {
+      const q = query(collection(db, "blog"), orderBy("createdAt", "desc"), limit(6));
+      const querySnapshot = await getDocs(q);
+      setBlogPosts(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as BlogPost[]);
+    };
+    loadBlog();
 
     // 4. Charger les formations à venir
-    const unsubTrainings = onSnapshot(query(collection(db, "trainings"), orderBy("createdAt", "desc"), limit(3)), (snapshot) => {
-      setTrainings(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as TrainingCourse[]);
-    });
+    const loadTrainings = async () => {
+      const q = query(collection(db, "trainings"), orderBy("createdAt", "desc"), limit(3));
+      const querySnapshot = await getDocs(q);
+      setTrainings(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as TrainingCourse[]);
+    };
+    loadTrainings();
 
     // 5. Charger les devis (Offres Directes)
     const unsubQuotes = onSnapshot(query(
@@ -165,8 +171,6 @@ const ClientDashboard: React.FC = () => {
     return () => {
       unsubTransactions();
       unsubResources();
-      unsubBlog();
-      unsubTrainings();
       unsubQuotes();
       clearTimeout(timeout);
     };
