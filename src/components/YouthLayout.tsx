@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { MessageSquare, Rocket, LogOut, Sparkles, HelpCircle } from 'lucide-react';
+import { MessageSquare, Rocket, LogOut, HelpCircle } from 'lucide-react';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,7 @@ const YouthLayout: React.FC = () => {
             <nav className="border-b border-indigo-900/50 bg-slate-900/50 backdrop-blur-md fixed w-full z-50">
                 <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
                     <Link to="/jeunes" className="text-2xl font-black text-indigo-400 flex items-center gap-2">
-                        <Sparkles /> COLIBRIS DES IA
+			      <img src="https://firebasestorage.googleapis.com/v0/b/cantic-think-ia-491512.firebasestorage.app/o/Colibri_des_ia.png?alt=media&token=effbf886-2ac6-4808-a6eb-cff2adc180b1" alt="Colibris des IA" className="w-8 h-8 object-contain" /> COLIBRIS DES IA
                     </Link>
                     <div className="flex items-center gap-6 text-sm font-bold tracking-widest uppercase">
                         <Link to="/forum" className="hover:text-indigo-300 flex items-center gap-2"><MessageSquare size={16}/> Echanges</Link>

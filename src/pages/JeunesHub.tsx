@@ -8,11 +8,16 @@ const JeunesHub: React.FC = () => {
             <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-16">
                     <h1 className="text-5xl md:text-6xl font-extrabold tracking-tighter text-slate-900 mb-4">
-                        Bienvenue dans ton <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">univers IA</span> ✨
+                        Bienvenue chez les <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-emerald-600">Colibris des IA</span> ✨
                     </h1>
-                    <p className="text-xl text-slate-500 max-w-2xl mx-auto">
-                        Comme le colibri qui fait sa part, chaque goutte compte. Explore, partage et contribue à l'avènement des IA au sein de notre communauté. Ensemble, bâtissons le futur.
-                    </p>
+                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-indigo-50 border-emerald-100 max-w-3xl mx-auto">
+                        <p className="text-lg text-slate-600 italic leading-relaxed">
+                            « Un immense feu de forêt ravageait tout. Alors que les autres animaux fuyaient, impuissants, un petit colibri faisait des allers-retours, transportant des gouttes d'eau dans son minuscule bec pour éteindre le feu. À un éléphant qui se moquait de lui, il répondit : <strong>"Je sais, mais je fais ma part."</strong> »
+                        </p>
+                        <p className="text-indigo-900 font-bold mt-6">
+                            Ici, chaque question, chaque partage, chaque projet est ton goutte d'eau. <strong>Rejoins la communauté et fais ta part.</strong>
+                        </p>
+                    </div>
                 </div>
                 
                 <div className="grid md:grid-cols-2 gap-8">

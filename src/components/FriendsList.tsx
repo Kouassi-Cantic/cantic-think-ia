@@ -21,7 +21,7 @@ export const FriendsList: React.FC = () => {
             </h2>
             <div className="space-y-4">
                 {friends.length === 0 ? (
-                    <p className="text-slate-500 italic">Pas encore d'amis dans le club...</p>
+                    <p className="text-slate-500 italic">Pas encore d'amis dans la communauté...</p>
                 ) : (
                     friends.map(friend => (
                         <div key={friend.id} className="flex justify-between items-center p-4 bg-slate-800 rounded-lg text-sm">

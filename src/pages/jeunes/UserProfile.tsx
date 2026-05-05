@@ -62,7 +62,7 @@ const UserProfile: React.FC = () => {
                     {!isEditing ? (
                         <>
                             <h1 className="text-3xl font-black">{user?.displayName || 'Jeune Talent'}</h1>
-                            <p className="text-indigo-200">{stats?.title || 'Membre actif du Cantic Club'}</p>
+                            <p className="text-indigo-200">{stats?.title || 'Membre actif des Colibris'}</p>
                             <p className="mt-2 text-sm text-slate-300">{stats?.bio || 'Ajoute une petite bio...'}</p>
                             <button onClick={() => setIsEditing(true)} className="mt-4 text-xs bg-white/10 px-3 py-1 rounded-full hover:bg-white/20">Modifier</button>
                         </>
