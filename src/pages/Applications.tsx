@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import { auth } from '../firebase';
 import { CaseStudy } from '../types';
 
@@ -74,7 +74,7 @@ const Applications: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log("📡 Applications : Démarrage de l'écoute Firestore...");
+    console.log("📡 Applications : Récupération des données Firestore...");
     
     if (!db) {
       console.error("❌ Applications : L'instance Firestore (db) n'est pas initialisée.");
@@ -82,44 +82,30 @@ const Applications: React.FC = () => {
       return;
     }
 
-    // Sécurité : Timeout de 10 secondes pour le chargement
-    const timeoutId = setTimeout(() => {
-      if (loading) {
-        console.warn("⚠️ Applications : Le chargement Firestore prend trop de temps, arrêt forcé.");
-        setLoading(false);
-      }
-    }, 10000);
-
-    try {
-      const q = query(collection(db, "cases"));
-      console.log("🔍 Applications : Requête créée pour la collection 'cases'");
-      
-      const unsubscribe = onSnapshot(q, (snapshot) => {
-        clearTimeout(timeoutId);
-        console.log("📥 Applications : Snapshot reçu, nb docs =", snapshot.size);
-        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as CaseStudy[];
+    const fetchData = async () => {
+      try {
+        const q = query(collection(db, "cases"));
+        console.log("🔍 Applications : Requête créée pour la collection 'cases'");
+        
+        // On remplace onSnapshot par getDocs
+        const querySnapshot = await getDocs(q);
+        
+        console.log("📥 Applications : Données reçues, nb docs =", querySnapshot.size);
+        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as CaseStudy[];
         
         data.sort((a, b) => (a.order || 0) - (b.order || 0));
         
         console.log("🔥 Applications : Données traitées :", data);
         setCases(data);
         setLoading(false);
-      }, (error) => {
-        clearTimeout(timeoutId);
+      } catch (error) {
         console.error("❌ Applications : Erreur Firestore détaillée :", error);
         handleFirestoreError(error, OperationType.GET, "cases");
         setLoading(false);
-      });
+      }
+    };
 
-      return () => {
-        clearTimeout(timeoutId);
-        unsubscribe();
-      };
-    } catch (err) {
-      clearTimeout(timeoutId);
-      console.error("❌ Applications : Erreur lors de la création de l'écouteur :", err);
-      setLoading(false);
-    }
+    fetchData();
   }, []);
 
   if (loading) {
