@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, query, orderBy, onSnapshot, limit } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, limit } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Clock } from 'lucide-react';
 
@@ -7,10 +7,12 @@ export const ActivityFeed: React.FC = () => {
     const [activities, setActivities] = useState<any[]>([]);
 
     useEffect(() => {
-        const q = query(collection(db, 'activities'), orderBy('createdAt', 'desc'), limit(5));
-        return onSnapshot(q, (snapshot) => {
+        const fetchActivities = async () => {
+            const q = query(collection(db, 'activities'), orderBy('createdAt', 'desc'), limit(5));
+            const snapshot = await getDocs(q);
             setActivities(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-        });
+        };
+        fetchActivities();
     }, []);
 
     return (

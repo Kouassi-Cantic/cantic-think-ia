@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, query, orderBy, onSnapshot, limit } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, limit } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Trophy } from 'lucide-react';
 
@@ -7,10 +7,12 @@ export const Leaderboard: React.FC = () => {
     const [leaders, setLeaders] = useState<any[]>([]);
 
     useEffect(() => {
-        const q = query(collection(db, 'user_stats'), orderBy('totalPoints', 'desc'), limit(5));
-        return onSnapshot(q, (snapshot) => {
+        const fetchLeaders = async () => {
+            const q = query(collection(db, 'user_stats'), orderBy('totalPoints', 'desc'), limit(5));
+            const snapshot = await getDocs(q);
             setLeaders(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-        });
+        };
+        fetchLeaders();
     }, []);
 
     return (
@@ -21,7 +23,7 @@ export const Leaderboard: React.FC = () => {
             <div className="space-y-4">
                 {leaders.map((user, i) => (
                     <div key={user.id} className="flex justify-between items-center p-4 bg-slate-800 rounded-lg">
-                        <span className="font-bold">{i + 1}. Utilisateur {user.userId.substring(0, 5)}</span>
+                        <span className="font-bold">{i + 1}. Utilisateur {user.userId ? user.userId.substring(0, 5) : 'Anonyme'}</span>
                         <span className="text-emerald-400 font-bold">{user.totalPoints} pts</span>
                     </div>
                 ))}
