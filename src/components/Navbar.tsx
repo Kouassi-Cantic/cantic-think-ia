@@ -4,6 +4,7 @@ import { NAVIGATION } from '../constants';
 import { Menu, X, ChevronDown, Search, Command, User, AlertCircle } from 'lucide-react';
 import Logo from './Logo';
 import { YouthAuthModal } from './YouthAuthModal';
+import { auth } from '../firebase';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +12,7 @@ const Navbar: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isYouthModalOpen, setIsYouthModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isYouthLoggedIn, setIsYouthLoggedIn] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -21,8 +23,26 @@ const Navbar: React.FC = () => {
     const clientEmail = localStorage.getItem('cantic_client_email');
     setIsLoggedIn(!!clientEmail);
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Track auth state
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setIsYouthLoggedIn(!!user);
+    });
+
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+        unsubscribe();
+    };
   }, [location.pathname]);
+
+  const handleYouthSectionClick = (e: React.MouseEvent, path: string) => {
+    if (path === '/jeunes' && !isYouthLoggedIn) {
+      e.preventDefault();
+      setIsYouthModalOpen(true);
+    } else {
+      setIsOpen(false);
+      setActiveDropdown(null);
+    }
+  };
 
   // Empêcher le scroll du body quand le menu mobile est ouvert
   useEffect(() => {
@@ -93,6 +113,7 @@ const Navbar: React.FC = () => {
                   <Link
                     to={item.path}
                     className={`text-[11px] font-black uppercase tracking-[0.2em] transition-colors ${location.pathname === item.path ? 'text-primary' : `${textColor} ${hoverColor}`}`}
+                    onClick={(e) => handleYouthSectionClick(e, item.path)}
                   >
                     {item.name}
                   </Link>
@@ -160,7 +181,7 @@ const Navbar: React.FC = () => {
                     </div>
                   </>
                 ) : (
-                  <Link to={item.path} onClick={() => setIsOpen(false)} className="text-2xl font-serif font-bold text-slate-900 block leading-tight active:text-primary transition-colors">{item.name}</Link>
+                  <Link to={item.path} onClick={(e) => handleYouthSectionClick(e, item.path)} className="text-2xl font-serif font-bold text-slate-900 block leading-tight active:text-primary transition-colors">{item.name}</Link>
                 )}
               </div>
             ))}
