@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Rocket, MessageSquare, Sparkles, Brain } from 'lucide-react';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase';
+import { ProfileCompletionModal } from '../components/ProfileCompletionModal';
 
 const JeunesHub: React.FC = () => {
+    const [showProfileModal, setShowProfileModal] = useState(false);
+
+    useEffect(() => {
+        const checkProfile = async () => {
+            if (!auth.currentUser) return;
+            const profileSnap = await getDoc(doc(db, 'user_profiles', auth.currentUser.uid));
+            if (!profileSnap.exists()) {
+                setShowProfileModal(true);
+            }
+        };
+        checkProfile();
+    }, []);
+
     return (
         <div className="pt-32 p-6 min-h-screen bg-neutral-50">
+            {showProfileModal && <ProfileCompletionModal onComplete={() => setShowProfileModal(false)} />}
             <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-16">
                     <h1 className="text-5xl md:text-6xl font-extrabold tracking-tighter text-slate-900 mb-4">

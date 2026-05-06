@@ -136,6 +136,11 @@ service cloud.firestore {
       allow create: if isAuthenticated() && request.auth.uid == userId;
       allow update: if isAuthenticated() && request.auth.uid == userId;
     }
+    match /user_profiles/{userId} {
+      allow read: if isAuthenticated() && request.auth.uid == userId;
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isAuthenticated() && request.auth.uid == userId;
+    }
     match /user_projects/{userId} {
       allow read: if isAuthenticated() && (request.auth.uid == userId || isManager());
       allow write: if isAuthenticated() && request.auth.uid == userId;
