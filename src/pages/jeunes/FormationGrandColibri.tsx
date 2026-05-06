@@ -12,9 +12,17 @@ const FormationGrandColibri: React.FC = () => {
                 setIsAuthorized(false);
                 return;
             }
+            // Check if user is Grand Colibri
             const statsRef = doc(db, 'user_stats', auth.currentUser.uid);
             const statsSnap = await getDoc(statsRef);
-            if (statsSnap.exists() && statsSnap.data()?.role === 'grand_colibri') {
+            const isGrandColibri = statsSnap.exists() && statsSnap.data()?.role === 'grand_colibri';
+
+            // Check if user is Admin
+            const adminRef = doc(db, 'admins', auth.currentUser.uid);
+            const adminSnap = await getDoc(adminRef);
+            const isAdmin = adminSnap.exists();
+
+            if (isGrandColibri || isAdmin) {
                 setIsAuthorized(true);
             } else {
                 setIsAuthorized(false);
