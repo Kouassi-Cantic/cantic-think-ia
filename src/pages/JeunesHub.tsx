@@ -4,9 +4,11 @@ import { Rocket, MessageSquare, Sparkles, Brain } from 'lucide-react';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { ProfileCompletionModal } from '../components/ProfileCompletionModal';
+import { YouthAuthModal } from '../components/YouthAuthModal';
 
 const JeunesHub: React.FC = () => {
     const [showProfileModal, setShowProfileModal] = useState(false);
+    const [isYouthModalOpen, setIsYouthModalOpen] = useState(false);
 
     useEffect(() => {
         const checkProfile = async () => {
@@ -35,8 +37,15 @@ const JeunesHub: React.FC = () => {
                             Ici, chaque question, chaque partage, chaque projet est ton goutte d'eau. <strong>Rejoins la communauté et fais ta part.</strong>
                             <br /><Link to="/manifeste-colibri" className="text-indigo-700 underline text-sm hover:text-emerald-700">Lire le manifeste complet</Link>
                         </p>
+                        <button 
+                          onClick={() => setIsYouthModalOpen(true)}
+                          className="mt-8 group px-8 py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-indigo-700 transition-all shadow-xl hover:scale-105"
+                        >
+                          Rejoindre la communauté
+                        </button>
                     </div>
                 </div>
+                {isYouthModalOpen && <YouthAuthModal isOpen={isYouthModalOpen} onClose={() => setIsYouthModalOpen(false)} />}
                 
                 <div className="grid md:grid-cols-2 gap-8">
                     <Link to="/offres-directes?scope=youth" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-indigo-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
