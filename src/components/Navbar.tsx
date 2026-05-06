@@ -75,13 +75,6 @@ const Navbar: React.FC = () => {
               >
                 <User className={`w-4 h-4 ${isLoggedIn ? 'text-primary' : ''}`} />
               </Link>
-              <button
-                 onClick={() => setIsYouthModalOpen(true)}
-                 className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all border shadow-lg border-indigo-400 bg-indigo-600 text-white hover:bg-indigo-700"
-              >
-                <AlertCircle className="w-3.5 h-3.5" />
-                Section Jeunes (13+)
-              </button>
             </div>
 
             {NAVIGATION.map((item) => (
@@ -153,18 +146,8 @@ const Navbar: React.FC = () => {
         <div className="lg:hidden fixed inset-0 z-[900] bg-white/95 backdrop-blur-xl transition-all duration-500 overflow-hidden flex flex-col h-screen">
           <div className="flex-grow px-8 mt-24 overflow-y-auto space-y-10 pb-32">
             {NAVIGATION.map((item) => (
-              <div key={item.name} className="animate-fade-in">
-                <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-4">{item.name}</div>
-                <div className="space-y-4">
-                  {item.children ? item.children.map(child => (
-                     <Link key={child.name} to={child.path} onClick={() => setIsOpen(false)} className="flex items-center space-x-4 group p-2 -mx-2 rounded-xl active:bg-slate-50">
-                       <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-primary group-active:scale-95 transition-transform"><child.icon className="w-5 h-5" /></div>
-                       <span className="text-lg font-serif font-bold text-slate-900 leading-tight">{child.name}</span>
-                     </Link>
-                  )) : (
-                     <Link to={item.path} onClick={() => setIsOpen(false)} className="text-2xl font-serif font-bold text-slate-900 block leading-tight active:text-primary transition-colors">{item.name}</Link>
-                  )}
-                </div>
+              <div key={item.name} className="animate-fade-in block space-y-4">
+                <Link to={item.path} onClick={() => setIsOpen(false)} className="text-2xl font-serif font-bold text-slate-900 block leading-tight active:text-primary transition-colors">{item.name}</Link>
               </div>
             ))}
             <div className="pt-6">
