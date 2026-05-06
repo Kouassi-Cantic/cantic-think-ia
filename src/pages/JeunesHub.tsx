@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Rocket, MessageSquare, Sparkles } from 'lucide-react';
+import { Rocket, MessageSquare, Sparkles, Target } from 'lucide-react';
 
 const JeunesHub: React.FC = () => {
     return (
@@ -54,12 +54,15 @@ const JeunesHub: React.FC = () => {
                         <p className="text-slate-500 text-sm font-medium">Structure tes idées en projets concrets.</p>
                     </Link>
 
-                    <Link to="/mur-victoires" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-rose-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                    <Link to="/mur-victoires" className="relative group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-rose-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2 border-2 border-rose-200 ring-2 ring-rose-100 ring-offset-2">
+                        <div className="absolute -top-3 -right-3 bg-rose-500 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg animate-pulse">
+                            DÉPOSE TA GOUTTE !
+                        </div>
                         <div className="p-4 rounded-2xl bg-rose-50 mb-6 group-hover:bg-rose-600 transition-colors">
                             <MessageSquare className="w-8 h-8 text-rose-600 group-hover:text-white transition-colors" />
                         </div>
                         <h2 className="text-2xl font-bold mb-2">Mur des victoires</h2>
-                        <p className="text-slate-500 text-sm font-medium">Partage tes astuces IA qui ont changé la donne.</p>
+                        <p className="text-slate-500 text-sm font-medium">Partage tes astuces IA, dépose ta goutte et inspire la communauté.</p>
                     </Link>
 
                     <Link to="/quiz-ia" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-blue-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
@@ -68,6 +71,14 @@ const JeunesHub: React.FC = () => {
                         </div>
                         <h2 className="text-2xl font-bold mb-2">Quiz IA</h2>
                         <p className="text-slate-500 text-sm font-medium">Teste tes connaissances et progresse.</p>
+                    </Link>
+
+                    <Link to="/challenges" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-rose-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                        <div className="p-4 rounded-2xl bg-rose-50 mb-6 group-hover:bg-rose-600 transition-colors">
+                            <Target className="w-8 h-8 text-rose-600 group-hover:text-white transition-colors" />
+                        </div>
+                        <h2 className="text-2xl font-bold mb-2">Challenges hebdomadaires</h2>
+                        <p className="text-slate-500 text-sm font-medium">Dépose ta "goutte" et grimpe dans le cercle des Colibris.</p>
                     </Link>
                 </div>
 

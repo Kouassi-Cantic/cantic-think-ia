@@ -62,7 +62,9 @@ const UserProfile: React.FC = () => {
                     {!isEditing ? (
                         <>
                             <h1 className="text-3xl font-black">{user?.displayName || 'Jeune Talent'}</h1>
-                            <p className="text-indigo-200">{stats?.title || 'Membre actif des Colibris'}</p>
+                            <p className="text-indigo-200 font-bold">
+                                {stats?.role === 'grand_colibri' ? 'Grand Colibri' : (stats?.title || 'Membre actif des Colibris')}
+                            </p>
                             <p className="mt-2 text-sm text-slate-300">{stats?.bio || 'Ajoute une petite bio...'}</p>
                             <button onClick={() => setIsEditing(true)} className="mt-4 text-xs bg-white/10 px-3 py-1 rounded-full hover:bg-white/20">Modifier</button>
                         </>
@@ -86,9 +88,9 @@ const UserProfile: React.FC = () => {
                     <div className="text-center p-6 bg-slate-800 rounded-2xl mb-6">
                         <p className="text-sm text-slate-400 uppercase tracking-widest">Score Total (Gouttes)</p>
                         <p className="text-5xl font-black text-indigo-400">{stats?.totalPoints || 0}</p>
-                        { (stats?.totalPoints || 0) >= 150 ? <p className="text-yellow-400 font-bold mt-2">Colibri d'Or</p> :
-                          (stats?.totalPoints || 0) >= 50 ? <p className="text-slate-300 font-bold mt-2">Colibri d'Argent</p> :
-                          (stats?.totalPoints || 0) >= 10 ? <p className="text-amber-700 font-bold mt-2">Colibri de Bronze</p> :
+                        { (stats?.totalPoints || 0) >= 150 ? <p className="text-yellow-400 font-bold mt-2">Colibri Éclaireur</p> :
+                          (stats?.totalPoints || 0) >= 50 ? <p className="text-slate-300 font-bold mt-2">Colibri Engagé</p> :
+                          (stats?.totalPoints || 0) >= 10 ? <p className="text-amber-700 font-bold mt-2">Colibri Junior</p> :
                           <p className="text-slate-400 font-bold mt-2">Apprenti Colibri</p>
                         }
                     </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, addDoc, query, onSnapshot, orderBy, doc, deleteDoc, getDoc, setDoc, getDocs } from 'firebase/firestore';
 import { db, auth } from '../../firebase';
 import { Victory } from '../../types';
+import SocialShare from '../../components/SocialShare';
 
 const MurVictoires: React.FC = () => {
     const [victories, setVictories] = useState<(Victory & { likes: number; hasLiked: boolean })[]>([]);
@@ -84,7 +85,14 @@ const MurVictoires: React.FC = () => {
                             </button>
                         </div>
                         <p className="text-slate-400 mt-2">{v.description}</p>
-                        <p className="text-sm text-slate-500 mt-4 italic">Par {v.userName}</p>
+                        <div className="flex justify-between items-center mt-4">
+                            <p className="text-sm text-slate-500 italic">Par {v.userName}</p>
+                            <SocialShare 
+                                title={`Colibris des IA : Ma victoire ! ${v.title}`}
+                                description={v.description}
+                                url={window.location.href}
+                            />
+                        </div>
                     </div>
                 ))}
             </div>
