@@ -12,9 +12,11 @@ import SEO from '../components/SEO';
 import ROISimulator from '../components/ROISimulator';
 import AuditTool from '../components/AuditTool';
 import { BRAND } from '../constants';
+import { YouthAuthModal } from '../components/YouthAuthModal';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const [isYouthModalOpen, setIsYouthModalOpen] = React.useState(false);
 
   return (
     <div className="bg-[#fcfcfd] overflow-x-hidden">
@@ -94,6 +96,17 @@ const Home: React.FC = () => {
           <div className="w-px h-24 bg-gradient-to-b from-slate-200 to-transparent"></div>
         </div>
       </section>
+
+      {/* --- YOUTH CTA --- */}
+      <section className="py-24 text-center">
+        <button 
+          onClick={() => setIsYouthModalOpen(true)}
+          className="group px-12 py-6 bg-indigo-600 text-white rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-indigo-700 transition-all shadow-xl hover:scale-105"
+        >
+          Accéder à la Section Jeunes (13+)
+        </button>
+      </section>
+      {isYouthModalOpen && <YouthAuthModal isOpen={isYouthModalOpen} onClose={() => setIsYouthModalOpen(false)} />}
 
       {/* --- SERVICES PREVIEW --- */}
       <section className="py-32 lg:py-48">
