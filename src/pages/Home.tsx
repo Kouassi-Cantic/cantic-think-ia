@@ -97,6 +97,17 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* --- YOUTH CTA --- */}
+      <section className="py-24 text-center">
+        <button 
+          onClick={() => setIsYouthModalOpen(true)}
+          className="group px-12 py-6 bg-indigo-600 text-white rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-indigo-700 transition-all shadow-xl hover:scale-105"
+        >
+          Accéder à la Section Jeunes (13+)
+        </button>
+      </section>
+      {isYouthModalOpen && <YouthAuthModal isOpen={isYouthModalOpen} onClose={() => setIsYouthModalOpen(false)} />}
+
       {/* --- SERVICES PREVIEW --- */}
       <section className="py-32 lg:py-48">
         <div className="container mx-auto px-6 lg:px-20">
