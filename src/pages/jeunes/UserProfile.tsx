@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db, auth } from '../../firebase';
 import { Victory, ProjectMilestone, ProjectLaunch } from '../../types';
 import { User, Award, Rocket, Clock, Trophy, Users } from 'lucide-react';
@@ -121,6 +121,16 @@ const UserProfile: React.FC = () => {
                         </div>
                     ) : <p className="text-slate-500 italic">Aucun projet actif dans le labo...</p>}
                 </div>
+                
+                {/* Account Management */}
+                <div className="bg-slate-900 p-8 rounded-3xl border border-rose-900">
+                    <h2 className="text-2xl font-bold mb-6 text-rose-400">Gestion du compte (GDPR)</h2>
+                    <div className="flex gap-4">
+                        <button onClick={async () => { await updateDoc(doc(db, 'user_consents', user!.uid), { status: 'paused' }); alert("Compte mis en pause"); }} className="bg-rose-900 text-rose-200 px-6 py-3 rounded-xl font-bold">Mettre en pause</button>
+                        <button onClick={async () => { await deleteDoc(doc(db, 'user_consents', user!.uid)); alert("Compte supprimé"); window.location.reload(); }} className="bg-red-900 text-red-200 px-6 py-3 rounded-xl font-bold">Supprimer tout</button>
+                    </div>
+                </div>
+                
                 <ActivityFeed />
                 <Leaderboard />
                 <FriendsList />

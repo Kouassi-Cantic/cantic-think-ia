@@ -37,6 +37,10 @@ service cloud.firestore {
       allow read: if true;
     }
 
+    match /grand_colibris/{docId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
     match /admins/{userId} {
       allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
       allow write: if isAdmin();
@@ -126,6 +130,11 @@ service cloud.firestore {
       allow update: if isAuthenticated() && request.auth.uid == userId && 
                        request.resource.data.userId == resource.data.userId &&
                        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['totalPoints', 'badges', 'bio', 'title']);
+    }
+    match /user_consents/{userId} {
+      allow read: if isAuthenticated() && request.auth.uid == userId;
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isAuthenticated() && request.auth.uid == userId;
     }
     match /user_projects/{userId} {
       allow read: if isAuthenticated() && (request.auth.uid == userId || isManager());

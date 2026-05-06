@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth } from '../firebase';
 
 interface Props {
@@ -12,6 +13,8 @@ export const YouthAuthModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showConsent, setShowConsent] = useState(false);
+  const [userCredential, setUserCredential] = useState<any>(null);
 
   if (!isOpen) return null;
 
@@ -34,14 +37,62 @@ export const YouthAuthModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const handleGoogleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
-      localStorage.setItem('user_type', 'youth');
-      onClose();
-      window.location.reload();
+      const result = await signInWithPopup(auth, provider);
+      
+      const userRef = doc(db, 'user_consents', result.user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        setUserCredential(result);
+        setShowConsent(true);
+      } else {
+        localStorage.setItem('user_type', 'youth');
+        onClose();
+        window.location.reload();
+      }
     } catch (err) {
       alert("Erreur lors de la connexion avec Google : " + err);
     }
   };
+
+  const handleConsentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!userCredential) return;
+    
+    await setDoc(doc(db, 'user_consents', userCredential.user.uid), {
+      consentedAt: new Date().toISOString(),
+      ageVerified: true,
+      status: 'active'
+    });
+
+    localStorage.setItem('user_type', 'youth');
+    onClose();
+    window.location.reload();
+  };
+
+  if (showConsent) {
+    return (
+      <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+        <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" />
+        <div className="relative bg-white rounded-[2rem] p-8 w-full max-w-md shadow-2xl animate-fade-in">
+          <h2 className="text-2xl font-bold mb-4">Consentement GDPR</h2>
+          <form onSubmit={handleConsentSubmit} className="space-y-4">
+            <label className="flex items-center gap-2">
+              <input type="checkbox" required />
+              <span className="text-sm">J'ai 13 ans ou plus.</span>
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="checkbox" required />
+              <span className="text-sm">J'accepte le traitement de mes données.</span>
+            </label>
+            <button type="submit" className="w-full bg-indigo-600 text-white rounded-xl py-3 font-bold hover:bg-indigo-700">
+              Valider mon inscription
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
