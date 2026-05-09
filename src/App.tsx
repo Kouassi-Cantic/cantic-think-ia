@@ -42,6 +42,7 @@ const Challenges = lazy(() => import('./pages/jeunes/Challenges'));
 const FormationGrandColibri = lazy(() => import('./pages/jeunes/FormationGrandColibri'));
 const QuizIA = lazy(() => import('./pages/jeunes/QuizIA'));
 const UserProfile = lazy(() => import('./pages/jeunes/UserProfile'));
+const Videos = lazy(() => import('./pages/jeunes/Videos'));
 const ManifesteColibri = lazy(() => import('./pages/ManifesteColibri'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
@@ -90,6 +91,7 @@ const App: React.FC = () => {
               <Route path="formation-grand-colibri" element={<FormationGrandColibri />} />
               <Route path="quiz-ia" element={<QuizIA />} />
               <Route path="profil" element={<UserProfile />} />
+              <Route path="videos" element={<Videos />} />
               <Route path="roi-simulator" element={<ROISimulatorPage />} />
               <Route path="service-conseil" element={<ServiceConseil />} />
               <Route path="service-ingenierie" element={<ServiceIngenierie />} />
