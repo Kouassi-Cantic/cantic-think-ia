@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ReactPlayer from 'react-player';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 
@@ -9,7 +8,6 @@ interface Video {
   url: string;
 }
 
-const ReactPlayerAny = ReactPlayer as any;
 
 const Videos: React.FC = () => {
     const [videos, setVideos] = useState<Video[]>([]);
@@ -19,12 +17,14 @@ const Videos: React.FC = () => {
             const querySnapshot = await getDocs(collection(db, 'youtube_videos'));
             const videosData = querySnapshot.docs.map(doc => {
                 const data = doc.data();
-                console.log("Video doc:", doc.id, data);
+                console.log("Video doc mapped:", doc.id, data);
                 return {
                     id: doc.id,
-                    ...data
-                };
-            }) as Video[];
+                    title: data.title,
+                    url: data.url.trim()
+                } as Video;
+            });
+            console.log("Fetched videos:", videosData);
             setVideos(videosData);
         };
         fetchVideos();
@@ -36,22 +36,28 @@ const Videos: React.FC = () => {
             <p className="mb-12 text-slate-600">Découvre des tutoriels, des témoignages et des projets inspirants réalisés par la communauté.</p>
             
             <div className="grid md:grid-cols-2 gap-8">
-                {videos.map((video) => (
-                    <div key={video.id} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
-                        <h2 className="text-xl font-bold mb-4 text-slate-900">{video.title}</h2>
-                        <div className="aspect-video w-full rounded-2xl overflow-hidden bg-slate-900">
-                            <ReactPlayerAny 
-                                url={video.url} 
-                                width="100%" 
-                                height="100%" 
-                                controls={true}
-                                config={{ youtube: { playerVars: { origin: window.location.origin } } }}
-                                onReady={() => console.log(`Player ready for: ${video.url}`)}
-                                onError={(e) => console.error(`Player error for: ${video.url}`, e)}
-                            />
+                {videos.map((video) => {
+                    // Simple extraction of video ID
+                    const urlParams = new URL(video.url).searchParams;
+                    const videoId = urlParams.get('v');
+                    const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : video.url;
+                    
+                    return (
+                        <div key={video.id} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                            <h2 className="text-xl font-bold mb-4 text-slate-900">{video.title}</h2>
+                            <div className="aspect-video w-full rounded-2xl overflow-hidden bg-slate-900">
+                                <iframe 
+                                    src={embedUrl}
+                                    width="100%" 
+                                    height="100%" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowFullScreen
+                                    title={video.title}
+                                />
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
             
             <div className="mt-16 bg-indigo-50 p-8 rounded-3xl text-center">
