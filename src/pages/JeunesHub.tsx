@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Rocket, MessageSquare, Sparkles, Brain } from 'lucide-react';
+import { Rocket, MessageSquare, Sparkles, Brain, Play } from 'lucide-react';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { ProfileCompletionModal } from '../components/ProfileCompletionModal';
@@ -97,6 +97,14 @@ const JeunesHub: React.FC = () => {
                         </div>
                         <h2 className="text-2xl font-bold mb-2">Quiz IA</h2>
                         <p className="text-slate-500 text-sm font-medium">Teste tes connaissances et progresse.</p>
+                    </Link>
+                    
+                    <Link to="/videos" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-violet-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                        <div className="p-4 rounded-2xl bg-violet-50 mb-6 group-hover:bg-violet-600 transition-colors">
+                            <Play className="w-8 h-8 text-violet-600 group-hover:text-white transition-colors" />
+                        </div>
+                        <h2 className="text-2xl font-bold mb-2">Bibliothèque Vidéo</h2>
+                        <p className="text-slate-500 text-sm font-medium">Découvre tutoriels et témoignages inspirants.</p>
                     </Link>
                     
                     <Link to="/formation-grand-colibri" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-indigo-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
