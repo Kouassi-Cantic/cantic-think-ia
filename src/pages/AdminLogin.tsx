@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, Mail, ArrowRight, ShieldCheck, Fingerprint, Loader2 } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ShieldCheck, Loader2 } from 'lucide-react';
 import { db, auth } from '../firebase';
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import Logo from '../components/Logo';
 
 const AdminLogin: React.FC = () => {
@@ -12,60 +12,78 @@ const AdminLogin: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const verifyAdminPrivileges = async (user: any, email: string) => {
+    // Vérification des privilèges dans la collection "admins"
+    const q = query(collection(db, "admins"), where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const userData = querySnapshot.docs[0].data();
+      if (userData.status === 'Suspendu') {
+        alert("ACCÈS RÉVOCÉ : Votre compte a été suspendu par la direction.");
+        await auth.signOut();
+        return false;
+      } else {
+        localStorage.setItem('cantic_admin_session', 'active');
+        localStorage.setItem('cantic_admin_token', 'true');
+        localStorage.setItem('cantic_admin_role', userData.role);
+        localStorage.setItem('cantic_admin_name', userData.name);
+        navigate('/admin');
+        return true;
+      }
+    } else {
+      // Cas spécial pour le fondateur si non présent dans la collection mais authentifié
+      if ((email === 'teletechnologyci@gmail.com' || email === 'ourega.goble@CANTIC-THINK-IA.work') && user.emailVerified) {
+        localStorage.setItem('cantic_admin_session', 'active');
+        localStorage.setItem('cantic_admin_token', 'true');
+        localStorage.setItem('cantic_admin_role', 'Super Admin');
+        localStorage.setItem('cantic_admin_name', 'Super Admin');
+        navigate('/admin');
+        return true;
+      } else if ((email === 'teletechnologyci@gmail.com' || email === 'ourega.goble@CANTIC-THINK-IA.work') && !user.emailVerified) {
+        alert("ACCÈS RESTREINT : Votre email doit être vérifié pour accéder à la console de gouvernance.");
+        await auth.signOut();
+        return false;
+      } else {
+        alert("ACCÈS REFUSÉ : Vous êtes authentifié mais non reconnu comme administrateur.");
+        await auth.signOut();
+        return false;
+      }
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      // 1. Authentification réelle via Firebase Auth
-      // Cela permet à Firestore de reconnaître l'utilisateur (request.auth != null)
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // 2. Vérification des privilèges dans la collection "admins"
-      const q = query(collection(db, "admins"), where("email", "==", email));
-      const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
-        const userData = querySnapshot.docs[0].data();
-        if (userData.status === 'Suspendu') {
-          alert("ACCÈS RÉVOCÉ : Votre compte a été suspendu par la direction.");
-          await auth.signOut();
-        } else {
-          localStorage.setItem('cantic_admin_session', 'active');
-          localStorage.setItem('cantic_admin_token', 'true');
-          localStorage.setItem('cantic_admin_role', userData.role);
-          localStorage.setItem('cantic_admin_name', userData.name);
-          navigate('/admin');
-        }
-      } else {
-        // Cas spécial pour le fondateur si non présent dans la collection mais authentifié
-        if ((email === 'teletechnologyci@gmail.com' || email === 'ourega.goble@CANTIC-THINK-IA.work') && user.emailVerified) {
-          localStorage.setItem('cantic_admin_session', 'active');
-          localStorage.setItem('cantic_admin_token', 'true');
-          localStorage.setItem('cantic_admin_role', 'Super Admin');
-          localStorage.setItem('cantic_admin_name', 'Super Admin');
-          navigate('/admin');
-        } else if ((email === 'teletechnologyci@gmail.com' || email === 'ourega.goble@CANTIC-THINK-IA.work') && !user.emailVerified) {
-          alert("ACCÈS RESTREINT : Votre email doit être vérifié pour accéder à la console de gouvernance.");
-          await auth.signOut();
-        } else {
-          alert("ACCÈS REFUSÉ : Vous êtes authentifié mais non reconnu comme administrateur.");
-          await auth.signOut();
-        }
-      }
+      await verifyAdminPrivileges(userCredential.user, email);
     } catch (error: any) {
       console.error("Login error:", error);
       if (error.code === 'auth/operation-not-allowed') {
-        const projectId = auth.app.options.projectId;
-        alert(`ERREUR CRITIQUE : L'authentification par email/mot de passe n'est pas reconnue comme activée pour le projet "${projectId}". 
-
-Vérifiez que vous êtes bien sur le bon projet dans la console Firebase (ID: ${projectId}). Si l'ID dans votre console est différent (ex: sans le suffixe numérique), contactez le support.`);
+        alert(`ERREUR CRITIQUE : L'authentification par email/mot de passe n'est pas reconnue comme activée pour le projet.`);
       } else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
         alert("ÉCHEC D'AUTHENTIFICATION : Identifiants incorrects ou compte non créé dans la console Firebase.");
       } else {
         alert("Erreur de connexion aux serveurs de sécurité : " + error.message);
       }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      if (result.user.email) {
+        await verifyAdminPrivileges(result.user, result.user.email);
+      }
+    } catch (error: any) {
+      console.error("Google Login error:", error);
+      alert("Erreur lors de la connexion Google : " + error.message);
     } finally {
       setIsLoading(false);
     }
@@ -137,6 +155,24 @@ Vérifiez que vous êtes bien sur le bon projet dans la console Firebase (ID: ${
                 )}
               </button>
             </div>
+
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-white/10"></div>
+              </div>
+              <div className="relative flex justify-center text-[10px] uppercase font-black text-slate-500 tracking-widest">
+                <span className="bg-[#0f172a] px-3">Ou connecter avec</span>
+              </div>
+            </div>
+
+            <button 
+              type="button"
+              onClick={handleGoogleLogin}
+              disabled={isLoading}
+              className="w-full py-5 bg-white/5 text-white rounded-2xl font-black uppercase text-[11px] tracking-widest flex items-center justify-center hover:bg-white/10 transition-all shadow-xl disabled:opacity-50"
+            >
+              Google
+            </button>
           </form>
         </div>
       </div>
