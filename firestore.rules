@@ -30,6 +30,13 @@ service cloud.firestore {
              data.createdAt is string;
     }
 
+    function isValidVideo(data) {
+      return data.keys().hasAll(['title', 'url', 'createdAt']) &&
+             data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+             data.url is string && data.url.size() > 0 && data.url.size() <= 500 &&
+             data.createdAt is timestamp;
+    }
+
     // --- Rules ---
     match /{document=**} { allow read, write: if false; }
 
@@ -140,6 +147,13 @@ service cloud.firestore {
       allow read: if isAuthenticated() && request.auth.uid == userId;
       allow create: if isAuthenticated() && request.auth.uid == userId;
       allow update: if isAuthenticated() && request.auth.uid == userId;
+    }
+    match /youtube_videos/{videoId} {
+      allow read: if isAuthenticated();
+      allow create: if isAdmin() && isValidVideo(request.resource.data) && request.resource.data.createdAt == request.time;
+      allow update: if isAdmin() && isValidVideo(request.resource.data) && 
+                       request.resource.data.diff(resource.data).affectedKeys().hasOnly(['title', 'url']);
+      allow delete: if isAdmin();
     }
     match /user_projects/{userId} {
       allow read: if isAuthenticated() && (request.auth.uid == userId || isManager());

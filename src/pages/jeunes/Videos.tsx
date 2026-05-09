@@ -1,19 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase';
 
-const VIDEOS = [
-  { id: '1', title: 'Introduction à l\'IA', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' }, // Placeholder
-  { id: '2', title: 'Projet Colibris en action', url: 'https://www.youtube.com/watch?v=kYJv-8p487I' }, // Placeholder
-];
+interface Video {
+  id: string;
+  title: string;
+  url: string;
+}
 
 const Videos: React.FC = () => {
+    const [videos, setVideos] = useState<Video[]>([]);
+
+    useEffect(() => {
+        const fetchVideos = async () => {
+            const querySnapshot = await getDocs(collection(db, 'youtube_videos'));
+            const videosData = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            })) as Video[];
+            setVideos(videosData);
+        };
+        fetchVideos();
+    }, []);
+
     return (
         <div className="p-8 max-w-6xl mx-auto min-h-screen">
             <h1 className="text-4xl font-black mb-4 text-slate-900">Bibliothèque Vidéo</h1>
             <p className="mb-12 text-slate-600">Découvre des tutoriels, des témoignages et des projets inspirants réalisés par la communauté.</p>
             
             <div className="grid md:grid-cols-2 gap-8">
-                {VIDEOS.map((video) => (
+                {videos.map((video) => (
                     <div key={video.id} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
                         <h2 className="text-xl font-bold mb-4 text-slate-900">{video.title}</h2>
                         <div className="aspect-video w-full rounded-2xl overflow-hidden bg-slate-900">

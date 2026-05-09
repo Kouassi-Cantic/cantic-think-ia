@@ -6,7 +6,7 @@ import {
   MessageSquare, Calendar, 
   FileText, GraduationCap,
   ChevronRight, Sparkles, ShieldCheck,
-  Briefcase, Banknote, Mail, Rocket, Lightbulb
+  Briefcase, Banknote, Mail, Rocket, Lightbulb, Play
 } from 'lucide-react';
 import Logo from './Logo';
 
@@ -26,6 +26,7 @@ const AdminLayout: React.FC = () => {
     { icon: GraduationCap, label: 'Formations', path: '/admin/training' },
     { icon: ShoppingBag, label: 'Boutique', path: '/admin/shop' },
     { icon: MessageSquare, label: 'Réflexions', path: '/admin/blog' },
+    { icon: Play, label: 'Vidéos IA', path: '/admin/videos' },
     { icon: Lightbulb, label: 'Labo Projets', path: '/admin/labo-projets' },
     { icon: Banknote, label: 'Flux Financiers', path: '/admin/transactions' },
     { icon: Rocket, label: 'Offres Directes', path: '/admin/quotes' },

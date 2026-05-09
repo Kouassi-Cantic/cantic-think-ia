@@ -52,6 +52,7 @@ const ClientLogin = lazy(() => import('./pages/ClientLogin'));
 
 // Protected Pages
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const AdminVideoManager = lazy(() => import('./pages/AdminVideoManager'));
 const ClientDashboard = lazy(() => import('./pages/ClientDashboard'));
 const AdminLaboProjets = lazy(() => import('./pages/AdminLaboProjets'));
 
@@ -125,6 +126,7 @@ const App: React.FC = () => {
               <Route path="shop" element={<AdminDashboard />} />
               <Route path="training" element={<AdminDashboard />} />
               <Route path="blog" element={<AdminDashboard />} />
+              <Route path="videos" element={<AdminVideoManager />} />
               <Route path="labo-projets" element={<AdminLaboProjets />} />
               <Route path="bookings" element={<AdminDashboard />} />
               <Route path="cases" element={<AdminDashboard />} />
