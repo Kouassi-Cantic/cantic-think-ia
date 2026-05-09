@@ -9,6 +9,7 @@ import { YouthAuthModal } from '../components/YouthAuthModal';
 const JeunesHub: React.FC = () => {
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [isYouthModalOpen, setIsYouthModalOpen] = useState(false);
+    const [featuredVideo, setFeaturedVideo] = useState<any>(null);
 
     useEffect(() => {
         const checkProfile = async () => {
@@ -18,7 +19,15 @@ const JeunesHub: React.FC = () => {
                 setShowProfileModal(true);
             }
         };
+        const fetchVideo = async () => {
+            const docRef = doc(db, 'youtube_videos', 'a4SYARZfWU5waZ5l7cW4');
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                setFeaturedVideo(docSnap.data());
+            }
+        };
         checkProfile();
+        fetchVideo();
     }, []);
 
     return (
@@ -115,6 +124,22 @@ const JeunesHub: React.FC = () => {
                         <p className="text-slate-500 text-sm font-medium">Accéder au parcours de formation exclusif.</p>
                     </Link>
                 </div>
+
+                {featuredVideo && (
+                    <div className="mt-12 bg-white rounded-3xl p-8 shadow-sm border border-indigo-100">
+                        <h2 className="text-3xl font-bold mb-6 text-slate-900">{featuredVideo.title}</h2>
+                        <div className="aspect-video w-full rounded-2xl overflow-hidden bg-slate-900">
+                            <iframe 
+                                src={`https://www.youtube.com/embed/${new URL(featuredVideo.url).searchParams.get('v')}`}
+                                width="100%" 
+                                height="100%" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowFullScreen
+                                title={featuredVideo.title}
+                            />
+                        </div>
+                    </div>
+                )}
 
                 <div className="mt-12 p-8 bg-gradient-to-r from-indigo-900 to-violet-900 rounded-3xl text-white shadow-xl text-center">
                     <Sparkles className="w-10 h-10 mx-auto text-yellow-400 mb-4" />
