@@ -9,6 +9,8 @@ interface Video {
   url: string;
 }
 
+const ReactPlayerAny = ReactPlayer as any;
+
 const Videos: React.FC = () => {
     const [videos, setVideos] = useState<Video[]>([]);
 
@@ -34,7 +36,7 @@ const Videos: React.FC = () => {
                     <div key={video.id} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
                         <h2 className="text-xl font-bold mb-4 text-slate-900">{video.title}</h2>
                         <div className="aspect-video w-full rounded-2xl overflow-hidden bg-slate-900">
-                            <ReactPlayer 
+                            <ReactPlayerAny 
                                 url={video.url} 
                                 width="100%" 
                                 height="100%" 
