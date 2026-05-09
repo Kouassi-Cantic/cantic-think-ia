@@ -46,6 +46,8 @@ const Videos: React.FC = () => {
                                 height="100%" 
                                 controls={true}
                                 config={{ youtube: { playerVars: { origin: window.location.origin } } }}
+                                onReady={() => console.log(`Player ready for: ${video.url}`)}
+                                onError={(e) => console.error(`Player error for: ${video.url}`, e)}
                             />
                         </div>
                     </div>
