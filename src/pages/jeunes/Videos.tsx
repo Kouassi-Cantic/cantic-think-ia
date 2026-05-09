@@ -17,10 +17,14 @@ const Videos: React.FC = () => {
     useEffect(() => {
         const fetchVideos = async () => {
             const querySnapshot = await getDocs(collection(db, 'youtube_videos'));
-            const videosData = querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            })) as Video[];
+            const videosData = querySnapshot.docs.map(doc => {
+                const data = doc.data();
+                console.log("Video doc:", doc.id, data);
+                return {
+                    id: doc.id,
+                    ...data
+                };
+            }) as Video[];
             setVideos(videosData);
         };
         fetchVideos();
@@ -41,6 +45,7 @@ const Videos: React.FC = () => {
                                 width="100%" 
                                 height="100%" 
                                 controls={true}
+                                config={{ youtube: { playerVars: { origin: window.location.origin } } }}
                             />
                         </div>
                     </div>
