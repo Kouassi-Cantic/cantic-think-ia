@@ -23,7 +23,7 @@ export const BRANDING = {
 };
 
 export const NAVIGATION = [
-  { name: 'Manifeste', path: '/a-propos' },
+  { name: 'À propos', path: '/a-propos' },
   { name: 'Section Jeunes (13+)', path: '/jeunes' },
   { name: 'Offres', path: '/offres-directes?scope=professional' },
   { 
