@@ -237,6 +237,8 @@ export interface ForumPost {
   votes: number;
   status: 'draft' | 'review' | 'analyzed';
   adminAnalysis?: string;
+  categoryId?: string;
+  isArticle?: boolean;
 }
 
 export interface Victory {
