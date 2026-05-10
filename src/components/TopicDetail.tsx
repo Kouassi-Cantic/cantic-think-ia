@@ -136,9 +136,14 @@ const TopicDetail: React.FC = () => {
         </button>
         {post.status === 'review' && <span className="text-yellow-600 font-bold">En cours d'analyse</span>}
         {auth.currentUser?.uid === post.authorId && post.status === 'draft' && (
-          <button onClick={handleDelete} className="bg-red-600 text-white px-4 py-2 rounded">
-            Supprimer
-          </button>
+          <>
+            <button onClick={() => navigate(`/forum/edit/${postId}`)} className="bg-amber-600 text-white px-4 py-2 rounded">
+              Modifier
+            </button>
+            <button onClick={handleDelete} className="bg-red-600 text-white px-4 py-2 rounded">
+              Supprimer
+            </button>
+          </>
         )}
       </div>
 

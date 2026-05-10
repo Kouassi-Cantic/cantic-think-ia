@@ -81,6 +81,7 @@ const App: React.FC = () => {
               <Route path="manifeste-colibri" element={<ManifesteColibri />} />
               <Route path="forum" element={<ForumList />} />
               <Route path="forum/new" element={<PostEditor />} />
+              <Route path="forum/edit/:postId" element={<PostEditor />} />
               <Route path="forum/post/:postId" element={<TopicDetail />} />
               <Route path="contact" element={<Contact />} />
               <Route path="legal" element={<Legal />} />

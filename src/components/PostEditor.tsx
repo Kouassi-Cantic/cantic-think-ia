@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db, auth } from '../firebase';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
 export const PostEditor: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -10,14 +10,26 @@ export const PostEditor: React.FC = () => {
   const [categories, setCategories] = useState<{id: string, name: string}[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const { postId } = useParams<{ postId: string }>();
 
   useEffect(() => {
-    // Populate from navigation state if available
-    if (location.state && location.state.idea) {
+    if (postId) {
+      const fetchPost = async () => {
+        const postRef = doc(db, 'forum_posts', postId);
+        const postSnap = await getDoc(postRef);
+        if (postSnap.exists()) {
+          const data = postSnap.data();
+          setTitle(data.title);
+          setContent(data.content);
+          setCategoryId(data.categoryId);
+        }
+      };
+      fetchPost();
+    } else if (location.state && location.state.idea) {
       setTitle(`Projet : ${location.state.idea.title}`);
       setContent(`Problème: ${location.state.idea.problem}\n\nSolution: ${location.state.idea.solution}`);
     }
-  }, [location.state]);
+  }, [postId, location.state]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -27,10 +39,10 @@ export const PostEditor: React.FC = () => {
         name: doc.data().name as string
       }));
       setCategories(categoriesData);
-      if (categoriesData.length > 0) setCategoryId(categoriesData[0].id);
+      if (categoriesData.length > 0 && !categoryId) setCategoryId(categoriesData[0].id);
     };
     fetchCategories();
-  }, []);
+  }, [categoryId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,17 +50,27 @@ export const PostEditor: React.FC = () => {
     if (!categoryId) return alert('Veuillez sélectionner une catégorie.');
 
     try {
-      await addDoc(collection(db, 'forum_posts'), {
-        title,
-        content,
-        authorId: auth.currentUser.uid,
-        categoryId: categoryId === 'article' ? 'Article IA & Toi' : categoryId,
-        isArticle: categoryId === 'article',
-        createdAt: new Date().toISOString()
-      });
-      navigate('/forum');
+      if (postId) {
+        await updateDoc(doc(db, 'forum_posts', postId), {
+          title,
+          content,
+          categoryId: categoryId === 'article' ? 'Article IA & Toi' : categoryId,
+          isArticle: categoryId === 'article',
+        });
+        navigate(`/forum/post/${postId}`);
+      } else {
+        await addDoc(collection(db, 'forum_posts'), {
+          title,
+          content,
+          authorId: auth.currentUser.uid,
+          categoryId: categoryId === 'article' ? 'Article IA & Toi' : categoryId,
+          isArticle: categoryId === 'article',
+          createdAt: new Date().toISOString()
+        });
+        navigate('/forum');
+      }
     } catch (error) {
-      console.error('Erreur lors de la création du post:', error);
+      console.error('Erreur lors de la publication du post:', error);
       alert('Erreur lors de la publication.');
     }
   };
@@ -58,7 +80,7 @@ export const PostEditor: React.FC = () => {
       {/* Form Column */}
       <div className="bg-slate-900/40 p-8 rounded-3xl border border-slate-800 shadow-2xl backdrop-blur-sm">
         <form onSubmit={handleSubmit} className="space-y-6">
-          <h2 className="text-3xl font-bold text-white tracking-tight">Poser une question</h2>
+          <h2 className="text-3xl font-bold text-white tracking-tight">{postId ? 'Modifier la question' : 'Poser une question'}</h2>
           <select 
             value={categoryId} 
             onChange={(e) => setCategoryId(e.target.value)} 
@@ -89,7 +111,7 @@ export const PostEditor: React.FC = () => {
             required
           />
           <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold p-4 rounded-xl transition-all shadow-lg shadow-indigo-900/20">
-            Publier la question
+            {postId ? 'Enregistrer les modifications' : 'Publier la question'}
           </button>
         </form>
       </div>
