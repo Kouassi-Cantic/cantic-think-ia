@@ -125,7 +125,7 @@ const TopicDetail: React.FC = () => {
   return (
     <div className="p-6 pt-32 max-w-2xl mx-auto">
       <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-      <p className="text-gray-600 mb-6 whitespace-pre-wrap">{post.content}</p>
+      <p className="text-gray-200 mb-6 whitespace-pre-wrap">{post.content}</p>
       
       <div className="flex gap-4 mb-8">
         <button onClick={handleVote} className="bg-indigo-600 text-white px-4 py-2 rounded">
@@ -135,7 +135,7 @@ const TopicDetail: React.FC = () => {
           Partager
         </button>
         {post.status === 'review' && <span className="text-yellow-600 font-bold">En cours d'analyse</span>}
-        {auth.currentUser?.uid === post.authorId && post.status === 'draft' && (
+        {auth.currentUser?.uid === post.authorId && (post.status === 'draft' || post.isArticle) && (
           <>
             <button onClick={() => navigate(`/forum/edit/${postId}`)} className="bg-amber-600 text-white px-4 py-2 rounded">
               Modifier

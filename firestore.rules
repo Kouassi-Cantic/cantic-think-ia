@@ -60,7 +60,7 @@ service cloud.firestore {
       allow read: if true;
       allow create: if isAuthenticated() && isValidPost(request.resource.data);
       allow update: if isAuthenticated() && (request.auth.uid == resource.data.authorId || isAdmin());
-      allow delete: if isAuthenticated() && ((request.auth.uid == resource.data.authorId && resource.data.status == 'draft') || isAdmin());
+      allow delete: if isAuthenticated() && ((request.auth.uid == resource.data.authorId && (resource.data.status == 'draft' || resource.data.isArticle == true)) || isAdmin());
     }
     match /subscribers/{docId} {
       allow read: if true;
