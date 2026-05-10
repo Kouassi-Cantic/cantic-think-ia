@@ -42,7 +42,8 @@ export const PostEditor: React.FC = () => {
         title,
         content,
         authorId: auth.currentUser.uid,
-        categoryId,
+        categoryId: categoryId === 'article' ? 'Article IA & Toi' : categoryId,
+        isArticle: categoryId === 'article',
         createdAt: new Date().toISOString()
       });
       navigate('/forum');
@@ -65,6 +66,9 @@ export const PostEditor: React.FC = () => {
             required
           >
             <option value="">Sélectionnez une catégorie</option>
+            {auth.currentUser?.email === 'teletechnologyci@gmail.com' && (
+              <option value="article">Article IA & Toi</option>
+            )}
             {categories.map(cat => (
               <option key={cat.id} value={cat.id}>{cat.name}</option>
             ))}

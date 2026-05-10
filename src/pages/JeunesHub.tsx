@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Rocket, MessageSquare, Sparkles, Brain, Play } from 'lucide-react';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, orderBy, getDocs } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { ProfileCompletionModal } from '../components/ProfileCompletionModal';
 import { YouthAuthModal } from '../components/YouthAuthModal';
@@ -26,8 +26,18 @@ const JeunesHub: React.FC = () => {
                 setFeaturedVideo(docSnap.data());
             }
         };
+        const fetchArticles = async () => {
+            const q = query(collection(db, 'forum_posts'), where('isArticle', '==', true), orderBy('createdAt', 'desc'));
+            const querySnapshot = await getDocs(q);
+            const articlesData = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setArticles(articlesData);
+        };
         checkProfile();
         fetchVideo();
+        fetchArticles();
     }, []);
 
     return (
@@ -144,27 +154,11 @@ const JeunesHub: React.FC = () => {
                 <section className="mt-16">
                     <h2 className="text-3xl font-bold mb-8 text-slate-900">IA & Toi : Comprendre pour agir</h2>
                     <div className="grid md:grid-cols-3 gap-6">
-                        {[
-                            {
-                                title: "IA & Créativité : Ton nouveau co-pilote",
-                                excerpt: "Apprends comment l'IA peut décupler tes idées en art, musique ou écriture tout en restant le maître à bord.",
-                                icon: Sparkles
-                            },
-                            {
-                                title: "L'IA te ment-elle ? L' art du doute",
-                                excerpt: "Détecter un deepfake, comprendre le biais : développe ton esprit critique face aux machines.",
-                                icon: Brain
-                            },
-                            {
-                                title: "Quels métiers dans un monde IA ?",
-                                excerpt: "Loin des idées reçues, découvre les compétences humaines qui deviennent plus précieuses que jamais.",
-                                icon: Rocket
-                            }
-                        ].map((article, i) => (
-                            <div key={i} className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all">
-                                <article.icon className="w-8 h-8 text-indigo-600 mb-4" />
+                        {articles.map((article) => (
+                            <div key={article.id} className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all">
+                                <Sparkles className="w-8 h-8 text-indigo-600 mb-4" />
                                 <h3 className="text-lg font-bold mb-2">{article.title}</h3>
-                                <p className="text-slate-600 text-sm">{article.excerpt}</p>
+                                <p className="text-slate-600 text-sm">{article.content.substring(0, 100)}...</p>
                             </div>
                         ))}
                     </div>
