@@ -10,6 +10,7 @@ const JeunesHub: React.FC = () => {
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [isYouthModalOpen, setIsYouthModalOpen] = useState(false);
     const [featuredVideo, setFeaturedVideo] = useState<any>(null);
+    const [articles, setArticles] = useState<any[]>([]);
 
     useEffect(() => {
         const checkProfile = async () => {
