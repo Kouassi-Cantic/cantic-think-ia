@@ -63,6 +63,13 @@ const JeunesHub: React.FC = () => {
                         >
                           Rejoindre la communauté
                         </button>
+                        <div className="mt-8 pt-8 border-t border-slate-100 text-sm text-slate-500">
+                          <p>
+                            <strong>Espace Novices :</strong> Que tu sois jeune curieux ou adulte débutant, 
+                            bienvenue dans ton espace d'apprentissage. Notre philosophie est inclusive : 
+                            pas de prérequis, juste une envie de progresser ensemble.
+                          </p>
+                        </div>
                     </div>
                 </div>
                 {isYouthModalOpen && <YouthAuthModal isOpen={isYouthModalOpen} onClose={() => setIsYouthModalOpen(false)} />}

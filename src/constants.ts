@@ -24,7 +24,7 @@ export const BRANDING = {
 
 export const NAVIGATION = [
   { name: 'À propos', path: '/a-propos' },
-  { name: 'Section Jeunes (13+)', path: '/jeunes' },
+  { name: 'Espace Novices', path: '/jeunes' },
   { name: 'Offres', path: '/offres-directes?scope=professional' },
   { 
     name: 'Expertise', 
