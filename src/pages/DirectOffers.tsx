@@ -6,7 +6,7 @@ import {
   Target, Package, MessageSquare, 
   ArrowRight, Calculator, AlertCircle,
   Sparkles, Zap, Info, UserPlus,
-  GraduationCap, BookOpen
+  GraduationCap, BookOpen, Brain
 } from 'lucide-react';
 import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
