@@ -433,8 +433,8 @@ const DirectOffers: React.FC = () => {
   console.log('DirectOffers: location.search =', location.search, ', scope =', scope);
 
   const filteredCategories = CATEGORIES.filter(cat => {
-    if (scope === 'youth') return cat.id === 'eleves' || cat.id === 'etudiants';
-    if (scope === 'professional') return cat.id !== 'eleves' && cat.id !== 'etudiants';
+    if (scope === 'youth') return cat.id === 'eleves' || cat.id === 'etudiants' || cat.id === 'adultes';
+    if (scope === 'professional') return cat.id !== 'eleves' && cat.id !== 'etudiants' && cat.id !== 'adultes';
     return true;
   });
 
@@ -451,7 +451,7 @@ const DirectOffers: React.FC = () => {
   
   // Need to update the rendering to use filteredCategories and filtered packs
   const filteredPacks = PACKS.filter(p => {
-    const isYouth = p.categoryId === 'eleves' || p.categoryId === 'etudiants';
+    const isYouth = p.categoryId === 'eleves' || p.categoryId === 'etudiants' || p.categoryId === 'adultes';
     if (scope === 'youth') return isYouth;
     if (scope === 'professional') return !isYouth;
     return true;
