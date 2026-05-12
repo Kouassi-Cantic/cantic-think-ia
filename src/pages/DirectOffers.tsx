@@ -43,6 +43,12 @@ const CATEGORIES = [
     name: 'Étudiants',
     description: 'Boostez votre profil pro et votre productivité académique.',
     icon: BookOpen
+  },
+  {
+    id: 'adultes',
+    name: 'Adultes débutants',
+    description: 'Lancez-vous sereinement avec des outils adaptés à votre rythme.',
+    icon: UserPlus
   }
 ];
 
@@ -185,7 +191,6 @@ const PACKS = [
     color: 'from-red-50 to-red-100/50',
     accent: 'bg-red-500'
   },
-  // Particuliers
   {
     id: 'pack-image-perso',
     categoryId: 'particuliers',
@@ -220,7 +225,6 @@ const PACKS = [
     color: 'from-slate-50 to-slate-100',
     accent: 'bg-slate-900'
   },
-  // Élèves
   {
     id: 'pack-avenir',
     categoryId: 'eleves',
@@ -255,7 +259,6 @@ const PACKS = [
     color: 'from-amber-50 to-amber-100/50',
     accent: 'bg-amber-500'
   },
-  // Étudiants
   {
     id: 'pack-etudiant-pro',
     categoryId: 'etudiants',
@@ -307,6 +310,57 @@ const PACKS = [
     icon: Target,
     color: 'from-emerald-50 to-emerald-100/50',
     accent: 'bg-emerald-600'
+  },
+  {
+    id: 'pack-starter-adulte',
+    categoryId: 'adultes',
+    name: 'Pack Starter Adulte',
+    tagline: "Je me lance sereinement",
+    description: "Une approche douce pour établir votre présence numérique professionnelle.",
+    features: [
+      'Nom de domaine personnel (.com ou .ci)',
+      'Email professionnel personnalisé',
+      'Accompagnement pas-à-pas pour Google Business',
+      'Session de prise en main personnalisée'
+    ],
+    price: 50000,
+    icon: Globe,
+    color: 'from-emerald-50 to-emerald-100/50',
+    accent: 'bg-emerald-600'
+  },
+  {
+    id: 'pack-serenite-numerique',
+    categoryId: 'adultes',
+    name: 'Pack Sérénité Numérique',
+    tagline: "Je maîtrise mes outils",
+    description: "Pour ceux qui veulent être à l'aise avec la technologie sans stress.",
+    features: [
+      'Formation à la sécurité de base (Mots de passe, Phishing)',
+      'Configuration de vos outils bureautiques',
+      'Initiation réseaux sociaux et outils de communication',
+      'Support utilisateur dédié (WhatsApp)'
+    ],
+    price: 35000,
+    icon: ShieldCheck,
+    color: 'from-slate-50 to-slate-100',
+    accent: 'bg-slate-900'
+  },
+  {
+    id: 'pack-ia-adulte',
+    categoryId: 'adultes',
+    name: 'Pack IA Performance',
+    tagline: "Je gagne du temps au quotidien",
+    description: "Découvrez comment l'IA peut simplifier vos tâches quotidiennes et professionnelles.",
+    features: [
+      'Formation pratique aux outils IA (Gemini, ChatGPT)',
+      'Astuces pour rédiger et organiser plus vite',
+      'Exemples d\'utilisation concrets pour votre métier',
+      'Session de questions-réponses dédiée'
+    ],
+    price: 40000,
+    icon: Brain,
+    color: 'from-amber-50 to-amber-100/50',
+    accent: 'bg-amber-500'
   }
 ];
 
