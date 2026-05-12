@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BookOpen, Users, Brain, Shield } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { db, auth } from '../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
@@ -32,7 +33,21 @@ const FormationGrandColibri: React.FC = () => {
     }, []);
 
     if (isAuthorized === null) return <div className="pt-32 p-6">Chargement...</div>;
-    if (!isAuthorized) return <div className="pt-32 p-6 text-center text-red-600 font-bold">Accès refusé. Cette section est réservée aux Grands Colibris.</div>;
+    if (!isAuthorized) return (
+        <div className="pt-32 p-6 text-center">
+            <h2 className="text-3xl font-bold mb-4 text-slate-900">Accès restreint</h2>
+            <p className="text-slate-600 mb-8 max-w-lg mx-auto">
+                Cette section est réservée aux Grands Colibris. 
+                Pour accéder à ce niveau d'expertise et de formation, rejoignez notre programme Premium.
+            </p>
+            <Link 
+                to="/offres-directes?scope=professional" 
+                className="inline-block px-8 py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-indigo-700 transition-all shadow-xl hover:scale-105"
+            >
+                Découvrir les offres Premium
+            </Link>
+        </div>
+    );
     
     return (
         <div className="min-h-screen bg-neutral-50 pt-32 pb-20 px-6">

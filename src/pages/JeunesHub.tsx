@@ -143,7 +143,10 @@ const JeunesHub: React.FC = () => {
                         <p className="text-slate-500 text-sm font-medium">Découvre tutoriels et témoignages inspirants.</p>
                     </Link>
                     
-                    <Link to="/formation-grand-colibri" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-indigo-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                    <Link to="/formation-grand-colibri" className="group p-8 bg-white rounded-3xl shadow-sm border border-slate-100 hover:shadow-2xl hover:border-indigo-100 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2 relative">
+                        <div className="absolute -top-3 -right-3 bg-indigo-500 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg">
+                            PRO
+                        </div>
                         <div className="p-4 rounded-2xl bg-indigo-50 mb-6 group-hover:bg-indigo-600 transition-colors">
                             <Brain className="w-8 h-8 text-indigo-600 group-hover:text-white transition-colors" />
                         </div>
